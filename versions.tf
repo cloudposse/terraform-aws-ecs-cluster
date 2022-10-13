@@ -4,11 +4,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "> 4.0"
+      version = ">= 4.0"
     }
     template = {
       source  = "hashicorp/template"
-      version = "> 2.2"
+      version = ">= 2.2"
     }
     # Update these to reflect the actual requirements of your module
     random = {
