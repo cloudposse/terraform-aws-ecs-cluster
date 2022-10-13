@@ -34,11 +34,6 @@ variable "log_configuration" {
     s3_key_prefix                  = string
   })
   default = null
-
-  validation {
-    condition     = var.logging != "OVERRIDE" || var.log_configuration != null
-    error_message = "log_configuration required because logging is set to 'OVERRIDE'"
-  }
 }
 
 
