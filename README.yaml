@@ -8,7 +8,7 @@
 # the template below the dashes
 
 # Name of this project
-name: terraform-example-module
+name: terraform-aws-ecs-cluster
 
 # License of this project
 license: "APACHE2"
@@ -20,7 +20,7 @@ copyrights:
   year: "2021"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-example-module
+github_repo: cloudposse/terraform-aws-ecs-cluster
 
 description: |-
   This is an example project to provide all the scaffolding for a typical well-built Cloud Posse
@@ -75,7 +75,7 @@ related:
 #
 
 # Name of this project
-name:
+name: AWS ECS cluster
 
 # Logo for this project
 #logo: docs/logo.png
@@ -95,8 +95,8 @@ github_repo:
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-example-module.svg"
-    url: "https://github.com/cloudposse/terraform-example-module/releases/latest"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-cluster.svg"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-cluster/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
@@ -167,5 +167,5 @@ include:
 
 # Contributors to this project
 contributors:
-  - name: "Erik Osterman"
-    github: "osterman"
+  - name: "Igor Rodionov"
+    github: "goruha"
