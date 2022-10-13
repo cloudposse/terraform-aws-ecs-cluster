@@ -36,7 +36,7 @@ variable "log_configuration" {
   default = null
 
   validation {
-    condition     = var.logging != 'OVERRIDE' || var.log_configuration != null
+    condition     = var.logging != "OVERRIDE" || var.log_configuration != null
     error_message = "log_configuration required because logging is set to 'OVERRIDE'"
   }
 }
