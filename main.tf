@@ -2,10 +2,10 @@ locals {
   enabled      = module.this.enabled
   cluster_name = join("", aws_ecs_cluster.default.*.name)
 
-  capacity_providers_fargate = [ for name, is_enabled in {
+  capacity_providers_fargate = [for name, is_enabled in {
     FARGATE : var.capacity_providers_fargate,
     FARGATE_SPOT : var.capacity_providers_fargate_spot
-  }: name if is_enabled ]
+  } : name if is_enabled]
 
   capacity_providers = distinct(concat(
     [for key, value in aws_ecs_capacity_provider.ec2 : value.name],
@@ -15,8 +15,8 @@ locals {
   default_capacity_strategy = [
     for name, weight in var.default_capacity_strategy.weights : {
       capacity_provider = name,
-      weight = weight,
-      base = var.default_capacity_strategy.base.provider == name ? var.default_capacity_strategy.base.value : null
+      weight            = weight,
+      base              = var.default_capacity_strategy.base.provider == name ? var.default_capacity_strategy.base.value : null
     }
   ]
 }

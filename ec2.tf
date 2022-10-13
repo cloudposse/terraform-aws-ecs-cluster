@@ -1,6 +1,6 @@
 locals {
   ec2_capacity_providers_cleanup = { for name, provider in var.capacity_providers_ec2 :
-    name => {for key, value in provider : key => value if value != null}
+    name => { for key, value in provider : key => value if value != null }
   }
 
   ec2_capacity_provider_default = {
@@ -30,7 +30,7 @@ locals {
     suspended_processes                  = []
     placement_group                      = ""
     metrics_granularity                  = "1Minute"
-    enabled_metrics                      = [
+    enabled_metrics = [
       "GroupMinSize",
       "GroupMaxSize",
       "GroupDesiredCapacity",
@@ -57,7 +57,7 @@ locals {
     metadata_http_put_response_hop_limit = 2
     metadata_http_tokens_required        = true
     metadata_http_protocol_ipv6_enabled  = false
-    tag_specifications_resource_types    = [
+    tag_specifications_resource_types = [
       "instance",
       "volume"
     ]
@@ -110,16 +110,16 @@ module "autoscale_group" {
 
 
   ## ECS autoscaling group does not have ELB integration, so we use EC2 health check type
-  health_check_type                    = "EC2"
+  health_check_type = "EC2"
   # The Auto Scaling group must have instance protection from scale in enabled to use managed termination protection for a capacity provider,
-  protect_from_scale_in                = true
+  protect_from_scale_in = true
   # Disable autoscaling rules because scaling would be managed by ECS
-  autoscaling_policies_enabled         = false
-  default_alarms_enabled               = false
+  autoscaling_policies_enabled = false
+  default_alarms_enabled       = false
 
-  iam_instance_profile_name            = local.instance_profile_name
-  user_data_base64                     = data.template_cloudinit_config.default[each.key].rendered
-  tags                                 = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
+  iam_instance_profile_name = local.instance_profile_name
+  user_data_base64          = data.template_cloudinit_config.default[each.key].rendered
+  tags                      = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
 
 
   instance_initiated_shutdown_behavior = each.value["instance_initiated_shutdown_behavior"]

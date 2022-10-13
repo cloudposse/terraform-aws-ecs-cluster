@@ -65,11 +65,11 @@ variable "capacity_providers_ec2" {
     target_capacity_utilization          = optional(number)
     ebs_optimized                        = optional(bool)
     associate_public_ip_address          = optional(bool)
-    block_device_mappings                = optional(list(object({
+    block_device_mappings = optional(list(object({
       device_name  = string
       no_device    = bool
       virtual_name = string
-      ebs          = object({
+      ebs = object({
         delete_on_termination = bool
         encrypted             = bool
         iops                  = number
@@ -80,7 +80,7 @@ variable "capacity_providers_ec2" {
       })
     })))
     instance_market_options = optional(object({
-      market_      = string
+      market_ = string
       spot_options = object({
         block_duration_minutes         = number
         instance_interruption_behavior = string
@@ -90,7 +90,7 @@ variable "capacity_providers_ec2" {
       })
     }))
     instance_refresh = optional(object({
-      strategy    = string
+      strategy = string
       preferences = object({
         instance_warmup        = number
         min_healthy_percentage = number
@@ -138,7 +138,7 @@ variable "capacity_providers_ec2" {
     tag_specifications_resource_types    = optional(set(string))
     max_instance_lifetime                = optional(number)
     capacity_rebalance                   = optional(bool)
-    warm_pool                            = optional(object({
+    warm_pool = optional(object({
       pool_state                  = string
       min_size                    = number
       max_group_prepared_capacity = number
@@ -146,7 +146,7 @@ variable "capacity_providers_ec2" {
   }))
   default = {}
   validation {
-    condition     = ! contains(["FARGATE", "FARGATE_SPOT"], keys(var.capacity_providers_ec2))
+    condition     = !contains(["FARGATE", "FARGATE_SPOT"], keys(var.capacity_providers_ec2))
     error_message = "'FARGATE' and 'FARGATE_SPOT' name is reserved"
   }
 
@@ -155,15 +155,15 @@ variable "capacity_providers_ec2" {
 variable "default_capacity_strategy" {
   type = object({
     base = object({
-      provider  = string
-      value = number
+      provider = string
+      value    = number
     })
     weights = map(number)
   })
   default = {
     base = {
       provider = "FARGATE"
-      value = 1
+      value    = 1
     }
     weights = {}
   }
