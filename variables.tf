@@ -26,7 +26,7 @@ variable "logging" {
 
 variable "log_configuration" {
   description = "The log configuration for the results of the execute command actions Required when logging is OVERRIDE"
-  type        = object({
+  type = object({
     cloud_watch_encryption_enabled = string
     cloud_watch_log_group_name     = string
     s3_bucket_name                 = string
@@ -50,8 +50,8 @@ variable "capacity_providers_fargate" {
 
 variable "capacity_providers_fargate_spot" {
   description = "Use FARGATE_SPOT capacity provider"
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "capacity_providers_ec2" {
