@@ -1,4 +1,6 @@
-region = "us-east-2"
+region = "us-west-1"
+
+availability_zones = ["us-west-1b", "us-west-1c"]
 
 namespace = "eg"
 
@@ -8,5 +10,4 @@ stage = "test"
 
 name = "example"
 
-example_input = "Hello, world!"
 
