@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "cloudposse/vpc/aws"
-  version = "1.1.0"
+  version = "1.2.0"
 
   context    = module.this.context
   cidr_block = "172.16.0.0/16"
@@ -8,7 +8,7 @@ module "vpc" {
 
 module "subnets" {
   source  = "cloudposse/dynamic-subnets/aws"
-  version = "2.0.2"
+  version = "2.0.4"
 
   context              = module.this.context
   availability_zones   = var.availability_zones
@@ -19,7 +19,7 @@ module "subnets" {
   nat_instance_enabled = false
 }
 
-module "example" {
+module "ecs_cluster" {
   source = "../.."
 
   context = module.this.context
@@ -29,7 +29,6 @@ module "example" {
   capacity_providers_fargate_spot = true
   capacity_providers_ec2 = {
     default = {
-      # image_id                    = "ami-03d937713d2d29e68"
       instance_type               = "t3.medium"
       security_group_ids          = [module.vpc.vpc_default_security_group_id]
       subnet_ids                  = module.subnets.private_subnet_ids

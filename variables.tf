@@ -1,7 +1,3 @@
-#terraform {
-#  experiments = [module_variable_optional_attrs]
-#}
-#
 variable "container_insights_enabled" {
   description = "Whether or not to enable container insights"
   type        = bool
@@ -34,7 +30,6 @@ variable "log_configuration" {
   })
   default = null
 }
-
 
 variable "capacity_providers_fargate" {
   description = "Use FARGATE capacity provider"
@@ -152,7 +147,6 @@ variable "capacity_providers_ec2" {
     condition     = !contains(["FARGATE", "FARGATE_SPOT"], keys(var.capacity_providers_ec2))
     error_message = "'FARGATE' and 'FARGATE_SPOT' name is reserved"
   }
-
 }
 
 variable "default_capacity_strategy" {
