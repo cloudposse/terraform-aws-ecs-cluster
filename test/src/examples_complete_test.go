@@ -24,7 +24,7 @@ func TestExamplesComplete(t *testing.T) {
 
   rootFolder := "../../"
   terraformFolderRelativeToRoot := "examples/complete"
-  varFiles := []string{"fixtures.us-east-2.tfvars"}
+  varFiles := []string{"fixtures.us-west-1.tfvars"}
 
   tempTestFolder := testStructure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
 
@@ -97,7 +97,7 @@ func TestExamplesCompleteDisabled(t *testing.T) {
 
   rootFolder := "../../"
   terraformFolderRelativeToRoot := "examples/complete"
-  varFiles := []string{"fixtures.us-east-2.tfvars"}
+  varFiles := []string{"fixtures.us-west-1.tfvars"}
 
   tempTestFolder := testStructure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
 
