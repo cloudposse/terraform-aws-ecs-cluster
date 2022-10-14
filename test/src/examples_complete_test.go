@@ -52,8 +52,8 @@ func TestExamplesComplete(t *testing.T) {
 
   // Verify we're getting back the outputs we expect
   // Ensure we get the attribute included in the ID
-  assert.Equal(t, "eg-ue2-test-example-"+randID, id)
-  assert.Contains(t, name, "eg-ue2-test-example-"+randID)
+  assert.Equal(t, "eg-ue2-test-example-"+randID, name)
+  assert.Contains(t, id, "eg-ue2-test-example-"+randID)
   assert.Contains(t, arn, "eg-ue2-test-example-"+randID)
 
   // ************************************************************************
