@@ -29,7 +29,7 @@ module "example" {
   capacity_providers_fargate_spot = true
   capacity_providers_ec2 = {
     default = {
-      image_id                    = "ami-03d937713d2d29e68"
+      # image_id                    = "ami-03d937713d2d29e68"
       instance_type               = "t3.medium"
       security_group_ids          = [module.vpc.vpc_default_security_group_id]
       subnet_ids                  = module.subnets.private_subnet_ids
