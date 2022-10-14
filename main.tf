@@ -41,7 +41,7 @@ resource "aws_ecs_cluster" "default" {
           cloud_watch_encryption_enabled = log_configuration.value["cloud_watch_encryption_enabled"]
           cloud_watch_log_group_name     = log_configuration.value["cloud_watch_log_group_name"]
           s3_bucket_name                 = log_configuration.value["s3_bucket_name"]
-          s3_bucket_encryption_enabled   = log_configuration.value["s3_bucket_encryption_enabled"]
+          s3_bucket_encryption_enabled   = true
           s3_key_prefix                  = log_configuration.value["s3_key_prefix"]
         }
       }

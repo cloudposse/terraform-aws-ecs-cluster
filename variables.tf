@@ -30,7 +30,6 @@ variable "log_configuration" {
     cloud_watch_encryption_enabled = string
     cloud_watch_log_group_name     = string
     s3_bucket_name                 = string
-    s3_bucket_encryption_enabled   = bool
     s3_key_prefix                  = string
   })
   default = null
