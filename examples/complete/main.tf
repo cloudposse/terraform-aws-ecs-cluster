@@ -2,9 +2,7 @@ module "vpc" {
   source  = "cloudposse/vpc/aws"
   version = "1.1.0"
 
-  namespace  = var.namespace
-  stage      = var.stage
-  name       = var.name
+  context    = module.this.context
   cidr_block = "172.16.0.0/16"
 }
 
@@ -12,10 +10,8 @@ module "subnets" {
   source  = "cloudposse/dynamic-subnets/aws"
   version = "2.0.2"
 
+  context              = module.this.context
   availability_zones   = var.availability_zones
-  namespace            = var.namespace
-  stage                = var.stage
-  name                 = var.name
   vpc_id               = module.vpc.vpc_id
   igw_id               = [module.vpc.igw_id]
   ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
