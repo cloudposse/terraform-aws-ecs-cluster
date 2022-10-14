@@ -71,9 +71,9 @@ locals {
     warm_pool             = null
   }
 
-  ec2_capacity_providers = { for name, provider in local.ec2_capacity_providers_cleanup :
+  ec2_capacity_providers = local.enabled ? { for name, provider in local.ec2_capacity_providers_cleanup :
     name => merge(local.ec2_capacity_provider_default, provider)
-  }
+  } : {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
