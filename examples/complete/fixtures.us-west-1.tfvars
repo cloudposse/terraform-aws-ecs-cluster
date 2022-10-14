@@ -10,4 +10,6 @@ stage = "test"
 
 name = "example"
 
+attributes = []
+
 
