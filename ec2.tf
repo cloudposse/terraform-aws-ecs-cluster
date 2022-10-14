@@ -103,13 +103,13 @@ EOT
 
 module "ecs_labels" {
   for_each = local.ec2_capacity_providers
-  source  = "cloudposse/label/null"
-  version = "0.25.0" # requires Terraform >= 0.13.0
+  source   = "cloudposse/label/null"
+  version  = "0.25.0" # requires Terraform >= 0.13.0
 
-  enabled     = var.enabled
-  attributes  = concat(module.this.context.attributes, [each.key])
-  tags        = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
-  context     = module.this.context
+  enabled    = var.enabled
+  attributes = concat(module.this.context.attributes, [each.key])
+  tags       = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
+  context    = module.this.context
 }
 
 module "autoscale_group" {
@@ -118,7 +118,7 @@ module "autoscale_group" {
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.30.1"
 
-  context    = module.ecs_labels[each.key].context
+  context = module.ecs_labels[each.key].context
 
   image_id      = each.value["image_id"]
   instance_type = each.value["instance_type"]
