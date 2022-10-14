@@ -45,18 +45,16 @@ func TestExamplesComplete(t *testing.T) {
   // This will run `terraform init` and `terraform apply` and fail the test if there are any errors
   terraform.InitAndApply(t, terraformOptions)
 
-  expectedExampleInput := "Hello, world!"
-
   // Run `terraform output` to get the value of an output variable
   id := terraform.Output(t, terraformOptions, "id")
-  example := terraform.Output(t, terraformOptions, "example")
-  random := terraform.Output(t, terraformOptions, "random")
+  name := terraform.Output(t, terraformOptions, "name")
+  arn := terraform.Output(t, terraformOptions, "arn")
 
   // Verify we're getting back the outputs we expect
-  // Ensure we get a random number appended
-  assert.Equal(t, expectedExampleInput+" "+random, example)
   // Ensure we get the attribute included in the ID
   assert.Equal(t, "eg-ue2-test-example-"+randID, id)
+  assert.Equal(t, "eg-ue2-test-example-"+randID, name)
+  assert.Equal(t, "eg-ue2-test-example-"+randID, arn)
 
   // ************************************************************************
   // This steps below are unusual, not generally part of the testing
@@ -69,56 +67,43 @@ func TestExamplesComplete(t *testing.T) {
   terraform.Apply(t, terraformOptions)
 
   id2 := terraform.Output(t, terraformOptions, "id")
-  example2 := terraform.Output(t, terraformOptions, "example")
-  random2 := terraform.Output(t, terraformOptions, "random")
+  name2 := terraform.Output(t, terraformOptions, "name")
+  arn2 := terraform.Output(t, terraformOptions, "arn")
 
   assert.Equal(t, id, id2, "Expected `id` to be stable")
-  assert.Equal(t, example, example2, "Expected `example` to be stable")
-  assert.Equal(t, random, random2, "Expected `random` to be stable")
-
-  // Then we run change the example and run it a third time and
-  // verify that the random number changed
-  newExample := "Goodbye"
-  terraformOptions.Vars["example_input_override"] = newExample
-  terraform.Apply(t, terraformOptions)
-
-  example3 := terraform.Output(t, terraformOptions, "example")
-  random3 := terraform.Output(t, terraformOptions, "random")
-
-  assert.NotEqual(t, random, random3, "Expected `random` to change when `example` changed")
-  assert.Equal(t, newExample+" "+random3, example3, "Expected `example` to use new random number")
-
+  assert.Equal(t, name, name2, "Expected `name` to be stable")
+  assert.Equal(t, arn, arn2, "Expected `arn` to be stable")
 }
 
-//func TestExamplesCompleteDisabled(t *testing.T) {
-//  t.Parallel()
-//  randID := strings.ToLower(random.UniqueId())
-//  attributes := []string{randID}
-//
-//  rootFolder := "../../"
-//  terraformFolderRelativeToRoot := "examples/complete"
-//  varFiles := []string{"fixtures.us-west-1.tfvars"}
-//
-//  tempTestFolder := testStructure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
-//
-//  terraformOptions := &terraform.Options{
-//    // The path to where our Terraform code is located
-//    TerraformDir: tempTestFolder,
-//    Upgrade:      true,
-//    // Variables to pass to our Terraform code using -var-file options
-//    VarFiles: varFiles,
-//    Vars: map[string]interface{}{
-//      "attributes": attributes,
-//      "enabled":    "false",
-//    },
-//  }
-//
-//  // At the end of the test, run `terraform destroy` to clean up any resources that were created
-//  defer cleanup(t, terraformOptions, tempTestFolder)
-//
-//  // This will run `terraform init` and `terraform apply` and fail the test if there are any errors
-//  results := terraform.InitAndApply(t, terraformOptions)
-//
-//  // Should complete successfully without creating or changing any resources
-//  assert.Contains(t, results, "Resources: 0 added, 0 changed, 0 destroyed.")
-//}
+func TestExamplesCompleteDisabled(t *testing.T) {
+ t.Parallel()
+ randID := strings.ToLower(random.UniqueId())
+ attributes := []string{randID}
+
+ rootFolder := "../../"
+ terraformFolderRelativeToRoot := "examples/complete"
+ varFiles := []string{"fixtures.us-west-1.tfvars"}
+
+ tempTestFolder := testStructure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
+
+ terraformOptions := &terraform.Options{
+   // The path to where our Terraform code is located
+   TerraformDir: tempTestFolder,
+   Upgrade:      true,
+   // Variables to pass to our Terraform code using -var-file options
+   VarFiles: varFiles,
+   Vars: map[string]interface{}{
+     "attributes": attributes,
+     "enabled":    "false",
+   },
+ }
+
+ // At the end of the test, run `terraform destroy` to clean up any resources that were created
+ defer cleanup(t, terraformOptions, tempTestFolder)
+
+ // This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+ results := terraform.InitAndApply(t, terraformOptions)
+
+ // Should complete successfully without creating or changing any resources
+ assert.Contains(t, results, "Resources: 0 added, 0 changed, 0 destroyed.")
+}
