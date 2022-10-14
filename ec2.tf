@@ -101,14 +101,24 @@ EOT
   }
 }
 
+module "ecs_labels" {
+  for_each = local.ec2_capacity_providers
+  source  = "cloudposse/label/null"
+  version = "0.25.0" # requires Terraform >= 0.13.0
+
+  enabled     = var.enabled
+  attributes  = concat(module.this.context.attributes, [each.key])
+  tags        = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
+  context     = module.this.context
+}
+
 module "autoscale_group" {
   for_each = local.ec2_capacity_providers
 
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.30.1"
 
-  context    = module.this.context
-  attributes = concat(var.attributes, [each.key])
+  context    = module.ecs_labels[each.key].context
 
   image_id      = each.value["image_id"]
   instance_type = each.value["instance_type"]
@@ -124,8 +134,6 @@ module "autoscale_group" {
 
   iam_instance_profile_name = local.instance_profile_name
   user_data_base64          = data.template_cloudinit_config.default[each.key].rendered
-  tags                      = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
-
 
   instance_initiated_shutdown_behavior = each.value["instance_initiated_shutdown_behavior"]
   key_name                             = each.value["key_name"]
