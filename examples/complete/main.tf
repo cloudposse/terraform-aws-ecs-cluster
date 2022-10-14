@@ -35,8 +35,8 @@ module "example" {
     default = {
       image_id                    = "ami-0ee5088f037f0da87"
       instance_type               = "t3.medium"
-      security_group_ids          = [module.vpc.outputs.vpc_default_security_group_id]
-      subnet_ids                  = module.vpc.outputs.private_subnet_ids
+      security_group_ids          = [module.vpc.vpc_default_security_group_id]
+      subnet_ids                  = module.vpc.private_subnet_ids
       associate_public_ip_address = false
       min_size                    = 0
       max_size                    = 2
