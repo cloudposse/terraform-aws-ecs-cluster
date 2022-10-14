@@ -52,6 +52,7 @@ locals {
       "GroupAndWarmPoolDesiredCapacity",
       "GroupAndWarmPoolTotalCapacity",
     ]
+    wait_for_capacity_timeout            = "10m"
     service_linked_role_arn              = ""
     metadata_http_endpoint_enabled       = true
     metadata_http_put_response_hop_limit = 2
