@@ -34,11 +34,13 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_managed_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_instance_role" {
+  count      = local.enabled ? 1 : 0
   role       = join("", aws_iam_role.default.*.name)
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_core_role" {
+  count      = local.enabled ? 1 : 0
   role       = join("", aws_iam_role.default.*.name)
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
