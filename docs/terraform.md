@@ -72,5 +72,7 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_id"></a> [id](#output\_id) | ID of the created example |
+| <a name="output_arn"></a> [arn](#output\_arn) | ECS cluster arn |
+| <a name="output_id"></a> [id](#output\_id) | ECS cluster id |
+| <a name="output_name"></a> [name](#output\_name) | ECS cluster name |
 <!-- markdownlint-restore -->
