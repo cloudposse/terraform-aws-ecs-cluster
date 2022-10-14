@@ -1,5 +1,5 @@
-data "aws_ssm_parameters_by_path" "ami" {
-  path = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+data "aws_ssm_parameter" "ami" {
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 locals {
@@ -8,7 +8,7 @@ locals {
   }
 
   ec2_capacity_provider_default = {
-    image_id                             = data.aws_ssm_parameters_by_path.ami.values
+    image_id                             = data.aws_ssm_parameter.ami.value
     instance_initiated_shutdown_behavior = "terminate"
     instance_warmup_period               = 300
     maximum_scaling_step_size            = 1
