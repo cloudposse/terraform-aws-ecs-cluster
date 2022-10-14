@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	// Known security flaws in terratest dependencies prior to v0.40.15
-	github.com/gruntwork-io/terratest v0.40.20
+	github.com/gruntwork-io/terratest v0.40.23
 	github.com/stretchr/testify v1.8.0
 )
 
