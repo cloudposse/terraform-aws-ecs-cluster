@@ -84,26 +84,19 @@ locals {
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
 
-data "template_cloudinit_config" "default" {
-  for_each      = local.ec2_capacity_providers
-  gzip          = false
-  base64_encode = true
-
-  part {
-    content_type = "text/x-shellscript"
-    content      = <<EOT
+locals {
+  user_data = {
+    for name, provider in local.ec2_capacity_providers :
+      name => <<EOT
 #!/bin/bash
 echo ECS_CLUSTER="${local.cluster_name}" >> /etc/ecs/ecs.config
 echo ECS_ENABLE_CONTAINER_METADATA=true >> /etc/ecs/ecs.config
 echo ECS_POLL_METRICS=true >> /etc/ecs/ecs.config
-echo ECS_ENABLE_SPOT_INSTANCE_DRAINING=${each.value.instance_market_options != null && each.value.mixed_instances_policy != null} >> /etc/ecs/ecs.config
-echo ECS_WARM_POOLS_CHECK=${each.value.warm_pool != null} >> /etc/ecs/ecs.config
-EOT
-  }
+echo ECS_ENABLE_SPOT_INSTANCE_DRAINING=${provider.instance_market_options != null && provider.mixed_instances_policy != null} >> /etc/ecs/ecs.config
+echo ECS_WARM_POOLS_CHECK=${provider.warm_pool != null} >> /etc/ecs/ecs.config
 
-  part {
-    content_type = "text/x-shellscript"
-    content      = replace(each.value["user_data"], "#!/bin/bash", "")
+${ replace(provider.user_data, "#!/bin/bash", "") }
+EOT
   }
 }
 
@@ -139,7 +132,7 @@ module "autoscale_group" {
   default_alarms_enabled       = false
 
   iam_instance_profile_name = local.instance_profile_name
-  user_data_base64          = data.template_cloudinit_config.default[each.key].rendered
+  user_data_base64          = local.user_data[each.key]
 
   instance_initiated_shutdown_behavior = each.value["instance_initiated_shutdown_behavior"]
   key_name                             = each.value["key_name"]
