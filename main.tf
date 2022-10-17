@@ -51,7 +51,7 @@ resource "aws_ecs_cluster" "default" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "default" {
-  count = local.enabled ? 1 : 0
+  count = local.enabled && length(local.capacity_providers) > 0 ? 1 : 0
 
   cluster_name = local.cluster_name
 
