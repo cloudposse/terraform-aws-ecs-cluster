@@ -1,74 +1,3 @@
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-#         DELETE ME
-#
-# This is the README configuration for the Example module itself.
-# Delete this (up to and including the line with `---`) and fill in
-# the template below the dashes
-
-# Name of this project
-name: terraform-aws-ecs-cluster
-
-# License of this project
-license: "APACHE2"
-
-# Copyrights
-copyrights:
-- name: "Cloud Posse, LLC"
-  url: "https://cloudposse.com"
-  year: "2021"
-
-# Canonical GitHub repo
-github_repo: cloudposse/terraform-aws-ecs-cluster
-
-description: |-
-  This is an example project to provide all the scaffolding for a typical well-built Cloud Posse
-  Terraform module for AWS resources. It's a template repository you can
-  use when creating new repositories. This is not a useful module by itself.
-
-quickstart: |-
-  1. Use this repo as a template for a new repo.
-  2. Check out the new repo and create a `git` branch to work on.
-  3. Replace the Terraform code at the root of the repo with the code you want to publish.
-  4. Replace the code in `examples/complete` with Terraform code that will make a good automated test.
-     Please keep `context.tf` and `fixtures.us-east-2.tfvars` in place and change only `name`, leaving
-     `region`, `namespace`, `environment`, and `stage` as is. Provide outputs that will be useful for testing.
-  5. Update `test/src/examples_complete_test.go` to verify the outputs of running `terraform apply` on `examples/complete`.
-  6. Run `make github/init` to update the repo with the current Cloud Posse framework files (e.g. `CODEOWNERS`).
-  7. Run `make pr/auto-format` to format the Terraform code and generate documentation.
-  8. Commit everything to `git` and open your first PR on the new repo.
-
-references:
-- name: "Cloud Posse Documentation"
-  url: "https://docs.cloudposse.com"
-  description: "The Cloud Posse Developer Hub (documentation)"
-- name: "Terraform Standard Module Structure"
-  description: "HashiCorp's standard module structure is a file and directory layout we recommend for reusable modules distributed in separate repositories."
-  url: "https://www.terraform.io/docs/language/modules/develop/structure.html"
-- name: "Terraform Module Requirements"
-  description: "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy."
-  url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
-- name: "Terraform Version Pinning"
-  description: "The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration"
-  url: "https://www.terraform.io/docs/language/settings/index.html#specifying-a-required-terraform-version"
-
-related:
-- name: "Example App"
-  url: "https://github.com/cloudposse/example-app"
-  description: "Example application for CI/CD demonstrations of Codefresh"
-
-
----
-#         DELETE ME
-#
-# The above is the README configuration for the Example module itself.
-# Delete from here to the top of file and fill in the template below
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-
-
 #
 # This is the canonical configuration for the `README.md`
 # Run `make readme` to rebuild the `README.md`
@@ -90,7 +19,7 @@ copyrights:
     year: "2021"
 
 # Canonical GitHub repo
-github_repo:
+github_repo: cloudposse/terraform-aws-ecs-cluster
 
 # Badges to display
 badges:
@@ -106,21 +35,42 @@ badges:
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
-  - name: "terraform-null-label"
-    description: "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention."
-    url: "https://github.com/cloudposse/terraform-null-label"
+  - name: "terraform-aws-ecs-web-app"
+    description: "Terraform module that implements a web app on ECS and supports autoscaling, CI/CD, monitoring, ALB integration, and much more."
+    url: "https://github.com/cloudposse/terraform-aws-ecs-web-app"
+  - name: "terraform-aws-ecs-alb-service-task"
+    description: "Terraform module which implements an ECS service which exposes a web service via ALB."
+    url: "https://github.com/cloudposse/terraform-aws-ecs-alb-service-task"
+  - name: "terraform-aws-ecs-atlantis"
+    description: "Terraform module for deploying Atlantis as an ECS Task."
+    url: "https://github.com/cloudposse/terraform-aws-ecs-atlantis"
 
 # List any resources helpful for someone to get started. For example, link to the hashicorp documentation or AWS documentation.
 references:
+  - name: "Amazon Elastic Container Service"
+    description: "Amazon Elastic Container Service (Amazon ECS) is a highly scalable and fast container management service."
+    url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+  - name: "Amazon ECS capacity providers"
+    description: "Amazon ECS capacity providers are used to manage the infrastructure the tasks in your clusters use."
+    url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-capacity-providers.html"
+  - name: "Amazon ECS Fargate"
+    description: "AWS Fargate is a technology that you can use with Amazon ECS to run containers without having to manage servers or clusters of Amazon EC2 instances."
+    url: "https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html"
+  - name: "Amazon EC2 Auto Scaling groups"
+    description: "An Auto Scaling group contains a collection of EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management."
+    url: "https://docs.aws.amazon.com/autoscaling/ec2/userguide/auto-scaling-groups.html"
+  - name: "terraform-aws-ec2-autoscale-group"
+    description: "Terraform module to provision Auto Scaling Group and Launch Template on AWS."
+    url: "https://github.com/cloudposse/terraform-aws-ec2-autoscale-group"
 
 # Short description of this project
 description: |-
-  Short
-  description
+  Terraform module to provision an [`ECS Cluster`](https://aws.amazon.com/ru/ecs/) with list of
+  [`capacity providers`](https://docs.aws.amazon.com/AmazonECS/latest/userguide/cluster-capacity-providers.html).
 
-# Introduction to the project
-introduction: |-
-  This is an introduction.
+  Supports [Amazon ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/fargate-capacity-providers.html)
+  and [EC2 Autoscaling](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cluster-auto-scaling.html)
+  capacity providers.
 
 # How to use this module. Should be an easy example to copy and paste.
 usage: |-
@@ -140,25 +90,47 @@ usage: |-
     name      = "example"
   }
 
-  module "example" {
-    source  = "cloudposse/*****/aws"
-    # Cloud Posse recommends pinning every module to a specific version
-    # version = "x.x.x"
+  module "vpc" {
+    source  = "cloudposse/vpc/aws"
+    version = "1.2.0"
 
-    example = "Hello world!"
+    context    = module.label.context
+    cidr_block = "172.16.0.0/16"
+  }
 
-    context = module.label.this
+  module "subnets" {
+    source  = "cloudposse/dynamic-subnets/aws"
+    version = "2.0.4"
+
+    context              = module.label.context
+    availability_zones   = var.availability_zones
+    vpc_id               = module.vpc.vpc_id
+    igw_id               = [module.vpc.igw_id]
+    ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
+    nat_gateway_enabled  = false
+    nat_instance_enabled = false
+  }
+
+  module "ecs_cluster" {
+    source = "../.."
+
+    context = module.label.context
+
+    container_insights_enabled      = true
+    capacity_providers_fargate      = true
+    capacity_providers_fargate_spot = true
+    capacity_providers_ec2 = {
+      default = {
+        instance_type               = "t3.medium"
+        security_group_ids          = [module.vpc.vpc_default_security_group_id]
+        subnet_ids                  = module.subnets.private_subnet_ids
+        associate_public_ip_address = false
+        min_size                    = 0
+        max_size                    = 2
+      }
+    }
   }
   ```
-
-# Example usage
-examples: |-
-  Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-example-module/) - complete example of using this module
-
-# How to get started quickly
-quickstart: |-
-  Here's how to get started...
 
 # Other files to include in this README from the project folder
 include:
