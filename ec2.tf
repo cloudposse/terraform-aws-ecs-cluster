@@ -3,8 +3,13 @@ data "aws_ssm_parameter" "ami" {
 }
 
 locals {
-  ec2_capacity_providers_cleanup = { for name, provider in var.capacity_providers_ec2 :
-    name => { for key, value in provider : key => value if value != null }
+  ec2_capacity_providers_cleanup = {
+    for name, provider in var.capacity_providers_ec2 :
+      name => {
+        for key, value in provider :
+          key => value
+          if value != null
+      }
   }
 
   ec2_capacity_provider_default = {
@@ -71,8 +76,9 @@ locals {
     warm_pool             = null
   }
 
-  ec2_capacity_providers = local.enabled ? { for name, provider in local.ec2_capacity_providers_cleanup :
-    name => merge(local.ec2_capacity_provider_default, provider)
+  ec2_capacity_providers = local.enabled ? {
+    for name, provider in local.ec2_capacity_providers_cleanup :
+      name => merge(local.ec2_capacity_provider_default, provider)
   } : {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
