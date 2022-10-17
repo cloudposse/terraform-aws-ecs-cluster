@@ -136,7 +136,7 @@ module "subnets" {
 }
 
 module "ecs_cluster" {
-  source = "../.."
+  source = "cloudposse/ecs-cluster/aws"
 
   context = module.label.context
 
