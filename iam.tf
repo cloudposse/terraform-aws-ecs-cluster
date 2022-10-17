@@ -1,7 +1,7 @@
 locals {
   policies_to_attach = toset([
-    "AmazonECSTaskExecutionRolePolicy",
-    "AmazonEC2ContainerServiceforEC2Role",
+    "service-role/AmazonECSTaskExecutionRolePolicy",
+    "service-role/AmazonEC2ContainerServiceforEC2Role",
     "AmazonSSMManagedInstanceCore"
   ])
 }
