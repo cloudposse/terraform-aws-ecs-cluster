@@ -76,7 +76,7 @@ variable "capacity_providers_ec2" {
         volume_size           = number
         volume_               = string
       })
-    })), [])
+    })))
     instance_market_options = optional(object({
       market_ = string
       spot_options = object({
@@ -86,7 +86,7 @@ variable "capacity_providers_ec2" {
         spot_instance_                 = string
         valid_until                    = string
       })
-    }), null)
+    }))
     instance_refresh = optional(object({
       strategy = string
       preferences = object({
@@ -94,7 +94,7 @@ variable "capacity_providers_ec2" {
         min_healthy_percentage = number
       })
       triggers = list(string)
-    }), null)
+    }))
     mixed_instances_policy = optional(object({
       instances_distribution = object({
         on_demand_allocation_strategy            = string
@@ -104,20 +104,20 @@ variable "capacity_providers_ec2" {
         spot_instance_pools                      = number
         spot_max_price                           = string
       })
-    }), null)
+    }))
     placement = optional(object({
       affinity          = string
       availability_zone = string
       group_name        = string
       host_id           = string
       tenancy           = string
-    }), null)
+    }))
     credit_specification = optional(object({
       cpu_credits = string
-    }), null)
+    }))
     elastic_gpu_specifications = optional(object({
       type = string
-    }), null)
+    }))
     disable_api_termination   = optional(bool, false)
     default_cooldown          = optional(number, 300)
     health_check_grace_period = optional(number, 300)
@@ -161,7 +161,7 @@ variable "capacity_providers_ec2" {
       pool_state                  = string
       min_size                    = number
       max_group_prepared_capacity = number
-    }), null)
+    }))
   }))
   default = {}
   validation {
