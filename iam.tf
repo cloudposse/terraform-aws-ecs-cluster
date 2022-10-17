@@ -38,7 +38,7 @@ data "aws_partition" "current" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_execution_managed_policy" {
-  for_each   = local.enabled ? local.policies_to_attach : []
+  for_each   = toset(local.enabled ? local.policies_to_attach : [])
   role       = join("", aws_iam_role.default.*.name)
   policy_arn = formatlist("arn:%s:iam::aws:policy/service-role/%s", join("", data.aws_partition.current.*.partition), each.value)
 }
