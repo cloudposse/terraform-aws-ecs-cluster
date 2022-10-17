@@ -76,7 +76,7 @@ variable "capacity_providers_ec2" {
         volume_size           = number
         volume_               = string
       })
-    })))
+    })), [])
     instance_market_options = optional(object({
       market_ = string
       spot_options = object({
