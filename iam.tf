@@ -40,5 +40,8 @@ data "aws_partition" "current" {
 resource "aws_iam_role_policy_attachment" "default" {
   for_each   = local.enabled ? local.policies_to_attach : []
   role       = join("", aws_iam_role.default.*.name)
-  policy_arn = format("arn:%s:iam::aws:policy/service-role/%s", join("", data.aws_partition.current.*.partition), each.value)
+  policy_arn = format("arn:%s:iam::aws:policy/%s", join("", data.aws_partition.current.*.partition), each.value)
+  depends_on = [
+    aws_iam_role.default
+  ]
 }
