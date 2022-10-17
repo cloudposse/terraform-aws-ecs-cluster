@@ -3,8 +3,7 @@ data "aws_ssm_parameter" "ami" {
 }
 
 locals {
-  # local.enabled ? var.capacity_providers_ec2 :
-  ec2_capacity_providers = {}
+  ec2_capacity_providers = local.enabled ? var.capacity_providers_ec2 : {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
