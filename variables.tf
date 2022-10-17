@@ -52,17 +52,17 @@ variable "capacity_providers_ec2" {
     subnet_ids         = list(string)
     security_group_ids = list(string)
 
-    image_id                             = optional(string)
-    instance_initiated_shutdown_behavior = optional(string)
-    key_name                             = optional(string)
-    user_data                            = optional(string)
-    enable_monitoring                    = optional(bool)
-    instance_warmup_period               = optional(number)
-    maximum_scaling_step_size            = optional(number)
-    minimum_scaling_step_size            = optional(number)
-    target_capacity_utilization          = optional(number)
-    ebs_optimized                        = optional(bool)
-    associate_public_ip_address          = optional(bool)
+    image_id                             = optional(string, null)
+    instance_initiated_shutdown_behavior = optional(string, "terminate")
+    key_name                             = optional(string, "")
+    user_data                            = optional(string, "")
+    enable_monitoring                    = optional(bool, true)
+    instance_warmup_period               = optional(number, 300)
+    maximum_scaling_step_size            = optional(number, 1)
+    minimum_scaling_step_size            = optional(number, 1)
+    target_capacity_utilization          = optional(number, 100)
+    ebs_optimized                        = optional(bool, false)
+    associate_public_ip_address          = optional(bool, false)
     block_device_mappings = optional(list(object({
       device_name  = string
       no_device    = bool
@@ -76,7 +76,7 @@ variable "capacity_providers_ec2" {
         volume_size           = number
         volume_               = string
       })
-    })))
+    })), [])
     instance_market_options = optional(object({
       market_ = string
       spot_options = object({
@@ -86,7 +86,7 @@ variable "capacity_providers_ec2" {
         spot_instance_                 = string
         valid_until                    = string
       })
-    }))
+    }), null)
     instance_refresh = optional(object({
       strategy = string
       preferences = object({
@@ -94,7 +94,7 @@ variable "capacity_providers_ec2" {
         min_healthy_percentage = number
       })
       triggers = list(string)
-    }))
+    }), null)
     mixed_instances_policy = optional(object({
       instances_distribution = object({
         on_demand_allocation_strategy            = string
@@ -104,43 +104,64 @@ variable "capacity_providers_ec2" {
         spot_instance_pools                      = number
         spot_max_price                           = string
       })
-    }))
+    }), null)
     placement = optional(object({
       affinity          = string
       availability_zone = string
       group_name        = string
       host_id           = string
       tenancy           = string
-    }))
+    }), null)
     credit_specification = optional(object({
       cpu_credits = string
-    }))
+    }), null)
     elastic_gpu_specifications = optional(object({
       type = string
-    }))
-    disable_api_termination              = optional(bool)
-    default_cooldown                     = optional(number)
-    health_check_grace_period            = optional(number)
-    force_delete                         = optional(bool)
-    termination_policies                 = optional(list(string))
-    suspended_processes                  = optional(list(string))
-    placement_group                      = optional(string)
-    metrics_granularity                  = optional(string)
-    enabled_metrics                      = optional(list(string))
-    wait_for_capacity_timeout            = optional(string)
-    service_linked_role_arn              = optional(string)
-    metadata_http_endpoint_enabled       = optional(bool)
-    metadata_http_put_response_hop_limit = optional(number)
-    metadata_http_tokens_required        = optional(bool)
-    metadata_http_protocol_ipv6_enabled  = optional(bool)
-    tag_specifications_resource_types    = optional(set(string))
-    max_instance_lifetime                = optional(number)
-    capacity_rebalance                   = optional(bool)
+    }), null)
+    disable_api_termination              = optional(bool, false)
+    default_cooldown                     = optional(number, 300)
+    health_check_grace_period            = optional(number, 300)
+    force_delete                         = optional(bool, false)
+    termination_policies                 = optional(list(string), ["Default"])
+    suspended_processes                  = optional(list(string), [])
+    placement_group                      = optional(string, "")
+    metrics_granularity                  = optional(string, "1Minute")
+    enabled_metrics                      = optional(list(string), [
+      "GroupMinSize",
+      "GroupMaxSize",
+      "GroupDesiredCapacity",
+      "GroupInServiceInstances",
+      "GroupPendingInstances",
+      "GroupStandbyInstances",
+      "GroupTerminatingInstances",
+      "GroupTotalInstances",
+      "GroupInServiceCapacity",
+      "GroupPendingCapacity",
+      "GroupStandbyCapacity",
+      "GroupTerminatingCapacity",
+      "GroupTotalCapacity",
+      "WarmPoolDesiredCapacity",
+      "WarmPoolWarmedCapacity",
+      "WarmPoolPendingCapacity",
+      "WarmPoolTerminatingCapacity",
+      "WarmPoolTotalCapacity",
+      "GroupAndWarmPoolDesiredCapacity",
+      "GroupAndWarmPoolTotalCapacity",
+    ])
+    wait_for_capacity_timeout            = optional(string, "10m")
+    service_linked_role_arn              = optional(string, "")
+    metadata_http_endpoint_enabled       = optional(bool, true)
+    metadata_http_put_response_hop_limit = optional(number, 2)
+    metadata_http_tokens_required        = optional(bool, true)
+    metadata_http_protocol_ipv6_enabled  = optional(bool, false)
+    tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])
+    max_instance_lifetime                = optional(number, null)
+    capacity_rebalance                   = optional(bool, false)
     warm_pool = optional(object({
       pool_state                  = string
       min_size                    = number
       max_group_prepared_capacity = number
-    }))
+    }), null)
   }))
   default = {}
   validation {

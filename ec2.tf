@@ -3,83 +3,7 @@ data "aws_ssm_parameter" "ami" {
 }
 
 locals {
-  ec2_capacity_providers_cleanup = {
-    for name, provider in var.capacity_providers_ec2 :
-    name => {
-      for key, value in provider :
-      key => value
-      if value != null
-    }
-  }
-
-  ec2_capacity_provider_default = {
-    image_id                             = data.aws_ssm_parameter.ami.value
-    instance_initiated_shutdown_behavior = "terminate"
-    instance_warmup_period               = 300
-    maximum_scaling_step_size            = 1
-    minimum_scaling_step_size            = 1
-    target_capacity_utilization          = 100
-    key_name                             = ""
-    user_data                            = ""
-    enable_monitoring                    = true
-    associate_public_ip_address          = false
-    ebs_optimized                        = false
-    block_device_mappings                = []
-    instance_market_options              = null
-    instance_refresh                     = null
-    mixed_instances_policy               = null
-    placement                            = null
-    credit_specification                 = null
-    elastic_gpu_specifications           = null
-    disable_api_termination              = false
-    default_cooldown                     = 300
-    health_check_grace_period            = 300
-    force_delete                         = false
-    termination_policies                 = ["Default"]
-    suspended_processes                  = []
-    placement_group                      = ""
-    metrics_granularity                  = "1Minute"
-    enabled_metrics = [
-      "GroupMinSize",
-      "GroupMaxSize",
-      "GroupDesiredCapacity",
-      "GroupInServiceInstances",
-      "GroupPendingInstances",
-      "GroupStandbyInstances",
-      "GroupTerminatingInstances",
-      "GroupTotalInstances",
-      "GroupInServiceCapacity",
-      "GroupPendingCapacity",
-      "GroupStandbyCapacity",
-      "GroupTerminatingCapacity",
-      "GroupTotalCapacity",
-      "WarmPoolDesiredCapacity",
-      "WarmPoolWarmedCapacity",
-      "WarmPoolPendingCapacity",
-      "WarmPoolTerminatingCapacity",
-      "WarmPoolTotalCapacity",
-      "GroupAndWarmPoolDesiredCapacity",
-      "GroupAndWarmPoolTotalCapacity",
-    ]
-    wait_for_capacity_timeout            = "10m"
-    service_linked_role_arn              = ""
-    metadata_http_endpoint_enabled       = true
-    metadata_http_put_response_hop_limit = 2
-    metadata_http_tokens_required        = true
-    metadata_http_protocol_ipv6_enabled  = false
-    tag_specifications_resource_types = [
-      "instance",
-      "volume"
-    ]
-    max_instance_lifetime = null
-    capacity_rebalance    = false
-    warm_pool             = null
-  }
-
-  ec2_capacity_providers = local.enabled ? {
-    for name, provider in local.ec2_capacity_providers_cleanup :
-    name => merge(local.ec2_capacity_provider_default, provider)
-  } : {}
+  ec2_capacity_providers = local.enabled ? var.capacity_providers_ec2 : {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
@@ -119,7 +43,7 @@ module "autoscale_group" {
 
   context = module.ecs_labels[each.key].context
 
-  image_id      = each.value["image_id"]
+  image_id      = each.value["image_id"] == null ? data.aws_ssm_parameter.ami.value : each.value["image_id"]
   instance_type = each.value["instance_type"]
 
 
