@@ -118,15 +118,15 @@ variable "capacity_providers_ec2" {
     elastic_gpu_specifications = optional(object({
       type = string
     }), null)
-    disable_api_termination              = optional(bool, false)
-    default_cooldown                     = optional(number, 300)
-    health_check_grace_period            = optional(number, 300)
-    force_delete                         = optional(bool, false)
-    termination_policies                 = optional(list(string), ["Default"])
-    suspended_processes                  = optional(list(string), [])
-    placement_group                      = optional(string, "")
-    metrics_granularity                  = optional(string, "1Minute")
-    enabled_metrics                      = optional(list(string), [
+    disable_api_termination   = optional(bool, false)
+    default_cooldown          = optional(number, 300)
+    health_check_grace_period = optional(number, 300)
+    force_delete              = optional(bool, false)
+    termination_policies      = optional(list(string), ["Default"])
+    suspended_processes       = optional(list(string), [])
+    placement_group           = optional(string, "")
+    metrics_granularity       = optional(string, "1Minute")
+    enabled_metrics = optional(list(string), [
       "GroupMinSize",
       "GroupMaxSize",
       "GroupDesiredCapacity",
