@@ -38,3 +38,8 @@ module "ecs_cluster" {
     }
   }
 }
+
+
+output "test" {
+  value = module.ecs_cluster.test
+}

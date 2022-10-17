@@ -3,7 +3,8 @@ data "aws_ssm_parameter" "ami" {
 }
 
 locals {
-  ec2_capacity_providers = local.enabled ? var.capacity_providers_ec2 : {}
+  # local.enabled ? var.capacity_providers_ec2 :
+  ec2_capacity_providers = {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
@@ -33,6 +34,10 @@ module "ecs_labels" {
   attributes = concat(module.this.context.attributes, [each.key])
   tags       = merge(module.this.context.tags, { "AmazonECSManaged" : "true" })
   context    = module.this.context
+}
+
+output "test" {
+  value = var.capacity_providers_ec2
 }
 
 module "autoscale_group" {
