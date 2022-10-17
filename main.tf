@@ -9,7 +9,7 @@ locals {
     } : name if is_enabled
   ]
 
-  capacity_providers = distinct(concat(aws_ecs_capacity_provider.ec2.*.name, local.capacity_providers_fargate))
+  capacity_providers = distinct(concat([for key, value in aws_ecs_capacity_provider.ec2 : value.name], local.capacity_providers_fargate))
 
   default_capacity_strategy = [
     for name, weight in var.default_capacity_strategy.weights : {
