@@ -132,7 +132,7 @@ module "autoscale_group" {
   default_alarms_enabled       = false
 
   iam_instance_profile_name = local.instance_profile_name
-  user_data_base64          = local.user_data[each.key]
+  user_data_base64          = base64encode(local.user_data[each.key])
 
   instance_initiated_shutdown_behavior = each.value["instance_initiated_shutdown_behavior"]
   key_name                             = each.value["key_name"]
