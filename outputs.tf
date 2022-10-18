@@ -1,14 +1,14 @@
+output "name" {
+  description = "ECS cluster name"
+  value       = module.this.enabled ? local.cluster_name : null
+}
+
 output "id" {
-  description = "ID of the created example"
-  value       = module.this.enabled ? module.this.id : null
+  description = "ECS cluster id"
+  value       = module.this.enabled ? join("", aws_ecs_cluster.default.*.id) : null
 }
 
-output "example" {
-  description = "Example output"
-  value       = module.this.enabled ? local.example : null
-}
-
-output "random" {
-  description = "Stable random number for this example"
-  value       = module.this.enabled ? join("", random_integer.example[*].result) : null
+output "arn" {
+  description = "ECS cluster arn"
+  value       = module.this.enabled ? join("", aws_ecs_cluster.default.*.arn) : null
 }
