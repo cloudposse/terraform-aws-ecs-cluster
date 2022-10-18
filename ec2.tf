@@ -67,16 +67,16 @@ module "autoscale_group" {
   enable_monitoring                    = each.value["enable_monitoring"]
   ebs_optimized                        = each.value["ebs_optimized"]
   ## Workaround to solve option type validation failure.
-  block_device_mappings                = jsondecode(jsonencode(each.value["block_device_mappings"]))
-  instance_market_options              = jsondecode(jsonencode(each.value["instance_market_options"]))
-  instance_refresh                     = each.value["instance_refresh"]
-  mixed_instances_policy               = merge(each.value["mixed_instances_policy"], { override = null })
-  placement                            = each.value["placement"]
-  credit_specification                 = each.value["credit_specification"]
-  elastic_gpu_specifications           = each.value["elastic_gpu_specifications"]
-  disable_api_termination              = each.value["disable_api_termination"]
-  max_size                             = each.value["max_size"]
-  min_size                             = each.value["min_size"]
+  block_device_mappings      = jsondecode(jsonencode(each.value["block_device_mappings"]))
+  instance_market_options    = jsondecode(jsonencode(each.value["instance_market_options"]))
+  instance_refresh           = each.value["instance_refresh"]
+  mixed_instances_policy     = merge(each.value["mixed_instances_policy"], { override = null })
+  placement                  = each.value["placement"]
+  credit_specification       = each.value["credit_specification"]
+  elastic_gpu_specifications = each.value["elastic_gpu_specifications"]
+  disable_api_termination    = each.value["disable_api_termination"]
+  max_size                   = each.value["max_size"]
+  min_size                   = each.value["min_size"]
   ## Desired capacity managed by ECS so by default we set it equal min_size
   desired_capacity                     = each.value["min_size"]
   default_cooldown                     = each.value["default_cooldown"]
