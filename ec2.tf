@@ -1,5 +1,6 @@
 data "aws_ssm_parameter" "ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  count = local.enabled ? 1 : 0
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 locals {
@@ -43,7 +44,7 @@ module "autoscale_group" {
 
   context = module.ecs_labels[each.key].context
 
-  image_id      = each.value["image_id"] == null ? data.aws_ssm_parameter.ami.value : each.value["image_id"]
+  image_id      = each.value["image_id"] == null ? join("", data.aws_ssm_parameter.ami.*.value) : each.value["image_id"]
   instance_type = each.value["instance_type"]
 
 
