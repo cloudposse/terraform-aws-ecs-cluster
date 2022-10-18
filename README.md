@@ -134,8 +134,8 @@ module "vpc" {
   source  = "cloudposse/vpc/aws"
   version = "1.2.0"
 
-  context    = module.label.context
-  cidr_block = "172.16.0.0/16"
+  context                 = module.label.context
+  ipv4_primary_cidr_block = "172.16.0.0/16"
 }
 
 module "subnets" {
