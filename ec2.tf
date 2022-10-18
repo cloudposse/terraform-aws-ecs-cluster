@@ -35,10 +35,6 @@ module "ecs_labels" {
   context    = module.this.context
 }
 
-output "test" {
-  value = var.capacity_providers_ec2
-}
-
 module "autoscale_group" {
   for_each = local.ec2_capacity_providers
 
@@ -69,8 +65,9 @@ module "autoscale_group" {
   associate_public_ip_address          = each.value["associate_public_ip_address"]
   enable_monitoring                    = each.value["enable_monitoring"]
   ebs_optimized                        = each.value["ebs_optimized"]
-  block_device_mappings                = each.value["block_device_mappings"]
-  instance_market_options              = each.value["instance_market_options"]
+  ## Workaround to solve option type validation failure.
+  block_device_mappings                = jsondecode(jsonencode(each.value["block_device_mappings"]))
+  instance_market_options              = jsondecode(jsonencode(each.value["instance_market_options"]))
   instance_refresh                     = each.value["instance_refresh"]
   mixed_instances_policy               = merge(each.value["mixed_instances_policy"], { override = null })
   placement                            = each.value["placement"]
