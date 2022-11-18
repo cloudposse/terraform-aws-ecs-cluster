@@ -40,8 +40,8 @@ module "ecs_cluster" {
   external_ec2_capacity_providers = {
     external_default = {
       autoscaling_group_arn          = module.autoscale_group.autoscaling_group_arn
-      managed_termination_protection = true
-      managed_scaling_status         = true
+      managed_termination_protection = false
+      managed_scaling_status         = false
       instance_warmup_period         = 300
       maximum_scaling_step_size      = 1
       minimum_scaling_step_size      = 1
