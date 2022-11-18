@@ -58,7 +58,7 @@ data "aws_ssm_parameter" "ami" {
 module "autoscale_group" {
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.31.1"
-  
+
   context = module.this.context
 
   image_id                    = join("", data.aws_ssm_parameter.ami.*.value)
