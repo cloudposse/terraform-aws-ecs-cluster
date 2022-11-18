@@ -40,15 +40,15 @@ module "ecs_cluster" {
 }
 
 data "aws_ssm_parameter" "ami" {
-  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 module "autoscale_group" {
-  source = "cloudposse/ec2-autoscale-group/aws"
+  source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.31.1"
 
-  name        = "external-capacity-provider"
-  context     = module.this.context
+  name    = "external-capacity-provider"
+  context = module.this.context
 
   image_id                    = data.aws_ssm_parameter.ami.value
   instance_type               = "t3.medium"
