@@ -51,7 +51,6 @@ module "ecs_cluster" {
 }
 
 data "aws_ssm_parameter" "ami" {
-  count = var.enabled ? 1 : 0
   name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
@@ -61,7 +60,7 @@ module "autoscale_group" {
 
   context = module.this.context
 
-  image_id                    = join("", data.aws_ssm_parameter.ami.*.value)
+  image_id                    = data.aws_ssm_parameter.ami.value
   instance_type               = "t3.medium"
   security_group_ids          = [module.vpc.vpc_default_security_group_id]
   subnet_ids                  = module.subnets.private_subnet_ids
