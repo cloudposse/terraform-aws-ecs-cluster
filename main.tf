@@ -11,6 +11,7 @@ locals {
 
   capacity_providers = distinct(concat(
     [for key, value in aws_ecs_capacity_provider.ec2 : value.name],
+    [for key, value in aws_ecs_capacity_provider.external_ec2 : value.name],
     local.capacity_providers_fargate
   ))
 
