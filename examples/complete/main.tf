@@ -38,3 +38,31 @@ module "ecs_cluster" {
     }
   }
 }
+
+data "aws_ssm_parameter" "ami" {
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+}
+
+module "autoscale_group" {
+  source = "cloudposse/ec2-autoscale-group/aws"
+  version = "0.31.1"
+
+  name        = "external-capacity-provider"
+  context     = module.this.context
+
+  image_id                    = data.aws_ssm_parameter.ami.value
+  instance_type               = "t3.medium"
+  security_group_ids          = [module.vpc.vpc_default_security_group_id]
+  subnet_ids                  = module.subnets.private_subnet_ids
+  health_check_type           = "EC2"
+  min_size                    = 0
+  max_size                    = 2
+  wait_for_capacity_timeout   = "5m"
+  associate_public_ip_address = false
+  user_data_base64            = ""
+
+  # Auto-scaling policies and CloudWatch metric alarms
+  autoscaling_policies_enabled           = true
+  cpu_utilization_high_threshold_percent = "70"
+  cpu_utilization_low_threshold_percent  = "20"
+}
