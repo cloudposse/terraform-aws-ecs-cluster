@@ -183,6 +183,11 @@ variable "external_ec2_capacity_providers" {
     minimum_scaling_step_size      = optional(number, 1)
     target_capacity_utilization    = optional(number, 100)
   }))
+  default = {}
+  validation {
+    condition     = !contains(["FARGATE", "FARGATE_SPOT"], keys(var.external_ec2_capacity_providers))
+    error_message = "'FARGATE' and 'FARGATE_SPOT' name is reserved"
+  }
 }
 
 variable "default_capacity_strategy" {
