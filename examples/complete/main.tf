@@ -62,11 +62,11 @@ EOT
 
 data "aws_ssm_parameter" "ami" {
   count = var.enabled ? 1 : 0
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 module "autoscale_group" {
-  count = var.enabled ? 1 : 0
+  count   = var.enabled ? 1 : 0
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.31.1"
 
