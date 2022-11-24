@@ -39,7 +39,7 @@ module "ecs_cluster" {
   }
   external_ec2_capacity_providers = {
     external_default = {
-      autoscaling_group_arn          = module.autoscale_group.autoscaling_group_arn
+      autoscaling_group_arn          = join("", module.autoscale_group.*.autoscaling_group_arn)
       managed_termination_protection = false
       managed_scaling_status         = false
       instance_warmup_period         = 300
@@ -61,16 +61,18 @@ EOT
 }
 
 data "aws_ssm_parameter" "ami" {
+  count = var.enabled ? 1 : 0
   name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 module "autoscale_group" {
+  count = var.enabled ? 1 : 0
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.31.1"
 
   context = module.this.context
 
-  image_id                    = data.aws_ssm_parameter.ami.value
+  image_id                    = join("", data.aws_ssm_parameter.ami.*.value)
   instance_type               = "t3.medium"
   security_group_ids          = [module.vpc.vpc_default_security_group_id]
   subnet_ids                  = module.subnets.private_subnet_ids
