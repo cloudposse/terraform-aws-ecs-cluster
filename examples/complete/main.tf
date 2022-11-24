@@ -52,7 +52,7 @@ module "ecs_cluster" {
 
 locals {
   cluster_name = var.enabled ? module.ecs_cluster.name : ""
-  user_data = <<EOT
+  user_data    = <<EOT
 #!/bin/bash
 echo ECS_CLUSTER="${local.cluster_name}" >> /etc/ecs/ecs.config
 echo ECS_ENABLE_CONTAINER_METADATA=true >> /etc/ecs/ecs.config
