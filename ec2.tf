@@ -4,7 +4,8 @@ data "aws_ssm_parameter" "ami" {
 }
 
 locals {
-  ec2_capacity_providers = local.enabled ? var.capacity_providers_ec2 : {}
+  ec2_capacity_providers          = local.enabled ? var.capacity_providers_ec2 : {}
+  external_ec2_capacity_providers = local.enabled ? var.external_ec2_capacity_providers : {}
 
   instance_profile_name = join("", aws_iam_instance_profile.default.*.name)
 }
@@ -112,6 +113,24 @@ resource "aws_ecs_capacity_provider" "ec2" {
       maximum_scaling_step_size = each.value["maximum_scaling_step_size"]
       minimum_scaling_step_size = each.value["minimum_scaling_step_size"]
       status                    = "ENABLED"
+      target_capacity           = each.value["target_capacity_utilization"]
+    }
+  }
+}
+
+resource "aws_ecs_capacity_provider" "external_ec2" {
+  for_each = local.external_ec2_capacity_providers
+  name     = each.key
+
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = each.value["autoscaling_group_arn"]
+    managed_termination_protection = each.value["managed_termination_protection"] ? "ENABLED" : "DISABLED"
+
+    managed_scaling {
+      instance_warmup_period    = each.value["instance_warmup_period"]
+      maximum_scaling_step_size = each.value["maximum_scaling_step_size"]
+      minimum_scaling_step_size = each.value["minimum_scaling_step_size"]
+      status                    = each.value["managed_scaling_status"] ? "ENABLED" : "DISABLED"
       target_capacity           = each.value["target_capacity_utilization"]
     }
   }
