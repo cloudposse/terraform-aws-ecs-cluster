@@ -50,6 +50,16 @@ module "ecs_cluster" {
   }
 }
 
+locals {
+  user_data = <<EOT
+#!/bin/bash
+echo ECS_CLUSTER="${module.ecs_cluster.name}" >> /etc/ecs/ecs.config
+echo ECS_ENABLE_CONTAINER_METADATA=true >> /etc/ecs/ecs.config
+echo ECS_POLL_METRICS=true >> /etc/ecs/ecs.config
+EOT
+
+}
+
 data "aws_ssm_parameter" "ami" {
   name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
@@ -65,14 +75,17 @@ module "autoscale_group" {
   security_group_ids          = [module.vpc.vpc_default_security_group_id]
   subnet_ids                  = module.subnets.private_subnet_ids
   health_check_type           = "EC2"
+  desired_capacity            = 0
   min_size                    = 0
   max_size                    = 2
   wait_for_capacity_timeout   = "5m"
-  associate_public_ip_address = false
-  user_data_base64            = ""
+  associate_public_ip_address = true
+  user_data_base64            = base64encode(local.user_data)
 
   # Auto-scaling policies and CloudWatch metric alarms
   autoscaling_policies_enabled           = true
   cpu_utilization_high_threshold_percent = "70"
   cpu_utilization_low_threshold_percent  = "20"
+
+  iam_instance_profile_name = module.ecs_cluster.role_name
 }
