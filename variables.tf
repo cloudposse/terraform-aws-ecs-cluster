@@ -159,6 +159,7 @@ variable "capacity_providers_ec2" {
     tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])
     max_instance_lifetime                = optional(number, null)
     capacity_rebalance                   = optional(bool, false)
+    update_default_version               = optional(bool, false)
     warm_pool = optional(object({
       pool_state                  = string
       min_size                    = number
