@@ -98,6 +98,7 @@ module "autoscale_group" {
   max_instance_lifetime                = each.value["max_instance_lifetime"]
   capacity_rebalance                   = each.value["capacity_rebalance"]
   warm_pool                            = each.value["warm_pool"]
+  update_default_version               = each.value["update_default_version"]
 }
 
 resource "aws_ecs_capacity_provider" "ec2" {
