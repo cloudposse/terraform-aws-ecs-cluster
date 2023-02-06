@@ -74,7 +74,7 @@ variable "capacity_providers_ec2" {
         kms_key_id            = string
         snapshot_id           = string
         volume_size           = number
-        volume_               = string
+        volume_type           = string
       })
     })), [])
     instance_market_options = optional(object({
