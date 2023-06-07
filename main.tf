@@ -1,6 +1,6 @@
 locals {
   enabled      = module.this.enabled
-  cluster_name = join("", aws_ecs_cluster.default.*.name)
+  cluster_name = join("", aws_ecs_cluster.default[*].name)
 
   capacity_providers_fargate = [
     for name, is_enabled in {

@@ -1,22 +1,20 @@
 module "vpc" {
-  source  = "cloudposse/vpc/aws"
-  version = "1.2.0"
-
+  source                  = "cloudposse/vpc/aws"
+  version                 = "2.1.0"
+  ipv4_primary_cidr_block = var.vpc_cidr_block
   context                 = module.this.context
-  ipv4_primary_cidr_block = "172.16.0.0/16"
 }
 
 module "subnets" {
-  source  = "cloudposse/dynamic-subnets/aws"
-  version = "2.0.4"
-
-  context              = module.this.context
+  source               = "cloudposse/dynamic-subnets/aws"
+  version              = "2.3.0"
   availability_zones   = var.availability_zones
   vpc_id               = module.vpc.vpc_id
   igw_id               = [module.vpc.igw_id]
   ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled  = false
   nat_instance_enabled = false
+  context              = module.this.context
 }
 
 module "ecs_cluster" {
@@ -39,7 +37,7 @@ module "ecs_cluster" {
   }
   external_ec2_capacity_providers = {
     external_ec2_default = {
-      autoscaling_group_arn          = join("", module.autoscale_group.*.autoscaling_group_arn)
+      autoscaling_group_arn          = join("", module.autoscale_group[*].autoscaling_group_arn)
       managed_termination_protection = false
       managed_scaling_status         = false
       instance_warmup_period         = 300
@@ -73,7 +71,7 @@ module "autoscale_group" {
 
   context = module.this.context
 
-  image_id                    = join("", data.aws_ssm_parameter.ami.*.value)
+  image_id                    = join("", data.aws_ssm_parameter.ami[*].value)
   instance_type               = "t3.medium"
   security_group_ids          = [module.vpc.vpc_default_security_group_id]
   subnet_ids                  = module.subnets.private_subnet_ids
