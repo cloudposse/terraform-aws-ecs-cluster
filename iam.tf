@@ -30,7 +30,7 @@ resource "aws_iam_role" "default" {
   name = module.this.id
   path = "/"
 
-  assume_role_policy = join("", data.aws_iam_policy_document.assume.*.json)
+  assume_role_policy = join("", data.aws_iam_policy_document.assume[*].json)
 }
 
 data "aws_partition" "current" {
@@ -39,8 +39,8 @@ data "aws_partition" "current" {
 
 resource "aws_iam_role_policy_attachment" "default" {
   for_each   = local.enabled ? local.policies_to_attach : []
-  role       = join("", aws_iam_role.default.*.name)
-  policy_arn = format("arn:%s:iam::aws:policy/%s", join("", data.aws_partition.current.*.partition), each.value)
+  role       = join("", aws_iam_role.default[*].name)
+  policy_arn = format("arn:%s:iam::aws:policy/%s", join("", data.aws_partition.current[*].partition), each.value)
   depends_on = [
     aws_iam_role.default
   ]
