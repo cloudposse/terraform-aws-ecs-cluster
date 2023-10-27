@@ -150,16 +150,17 @@ variable "capacity_providers_ec2" {
       "GroupAndWarmPoolDesiredCapacity",
       "GroupAndWarmPoolTotalCapacity",
     ])
-    wait_for_capacity_timeout            = optional(string, "10m")
-    service_linked_role_arn              = optional(string, "")
-    metadata_http_endpoint_enabled       = optional(bool, true)
-    metadata_http_put_response_hop_limit = optional(number, 2)
-    metadata_http_tokens_required        = optional(bool, true)
-    metadata_http_protocol_ipv6_enabled  = optional(bool, false)
-    tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])
-    max_instance_lifetime                = optional(number, null)
-    capacity_rebalance                   = optional(bool, false)
-    update_default_version               = optional(bool, false)
+    wait_for_capacity_timeout               = optional(string, "10m")
+    service_linked_role_arn                 = optional(string, "")
+    metadata_http_endpoint_enabled          = optional(bool, true)
+    metadata_http_put_response_hop_limit    = optional(number, 2)
+    metadata_http_tokens_required           = optional(bool, true)
+    metadata_http_protocol_ipv6_enabled     = optional(bool, false)
+    metadata_instance_metadata_tags_enabled = optional(bool, false)
+    tag_specifications_resource_types       = optional(set(string), ["instance", "volume"])
+    max_instance_lifetime                   = optional(number, null)
+    capacity_rebalance                      = optional(bool, false)
+    update_default_version                  = optional(bool, false)
     warm_pool = optional(object({
       pool_state                  = string
       min_size                    = number
