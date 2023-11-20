@@ -38,10 +38,7 @@ capacity providers.
 ---
 
 This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops) approach towards DevOps.
-
-
-[![Terraform Open Source Modules](https://docs.cloudposse.com/images/terraform-open-source-modules.svg)][terraform_modules]
-
+<a href="https://cpco.io/terraform-modules"><img src="https://docs.cloudposse.com/images/terraform-open-source-modules.svg" align="right" /></a>
 
 
 It's 100% Open Source and licensed under the [APACHE2](LICENSE).
@@ -59,33 +56,18 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 
 
-## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
-
-Security scanning is graciously provided by Bridgecrew. Bridgecrew is the leading fully hosted, cloud-native solution providing continuous Terraform security and compliance.
-
-| Benchmark | Description |
-|--------|---------------|
-| [![Infrastructure Security](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=INFRASTRUCTURE+SECURITY) | Infrastructure Security Compliance |
-| [![CIS KUBERNETES](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/cis_kubernetes)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=CIS+KUBERNETES+V1.5) | Center for Internet Security, KUBERNETES Compliance |
-| [![CIS AWS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/cis_aws)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=CIS+AWS+V1.2) | Center for Internet Security, AWS Compliance |
-| [![CIS AZURE](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/cis_azure)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=CIS+AZURE+V1.1) | Center for Internet Security, AZURE Compliance |
-| [![PCI-DSS](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/pci)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=PCI-DSS+V3.2) | Payment Card Industry Data Security Standards Compliance |
-| [![NIST-800-53](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=NIST-800-53) | National Institute of Standards and Technology Compliance |
-| [![ISO27001](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/iso)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=ISO27001) | Information Security Management System, ISO/IEC 27001 Compliance |
-| [![SOC2](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/soc2)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=SOC2)| Service Organization Control 2 Compliance |
-| [![CIS GCP](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/cis_gcp)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=CIS+GCP+V1.1) | Center for Internet Security, GCP Compliance |
-| [![HIPAA](https://www.bridgecrew.cloud/badges/github/cloudposse/terraform-aws-ecs-cluster/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=cloudposse%2Fterraform-aws-ecs-cluster&benchmark=HIPAA) | Health Insurance Portability and Accountability Compliance |
-
-
 
 ## Usage
 
 
-**IMPORTANT:** We do not pin modules to versions in our examples because of the
-difficulty of keeping the versions in the documentation in sync with the latest released versions.
-We highly recommend that in your code you pin the version to the exact version you are
-using so that your infrastructure remains stable, and update versions in a
-systematic way so that they do not catch you by surprise.
+
+> **Important**
+> We do not pin modules to versions in our examples because of the
+> difficulty of keeping the versions in the documentation in sync with the latest released versions.
+> We highly recommend that in your code you pin the version to the exact version you are
+> using so that your infrastructure remains stable, and update versions in a
+> systematic way so that they do not catch you by surprise.
+
 
 
 For a complete example, see [examples/complete](examples/complete).
@@ -197,7 +179,7 @@ Available targets:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_autoscale_group"></a> [autoscale\_group](#module\_autoscale\_group) | cloudposse/ec2-autoscale-group/aws | 0.35.0 |
+| <a name="module_autoscale_group"></a> [autoscale\_group](#module\_autoscale\_group) | cloudposse/ec2-autoscale-group/aws | 0.39.0 |
 | <a name="module_ecs_labels"></a> [ecs\_labels](#module\_ecs\_labels) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
@@ -222,7 +204,7 @@ Available targets:
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br>This is for some rare cases where resources want additional configuration of tags<br>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element. | `list(string)` | `[]` | no |
-| <a name="input_capacity_providers_ec2"></a> [capacity\_providers\_ec2](#input\_capacity\_providers\_ec2) | EC2 autoscale groups capacity providers | <pre>map(object({<br>    instance_type      = string<br>    max_size           = number<br>    min_size           = number<br>    subnet_ids         = list(string)<br>    security_group_ids = list(string)<br><br>    image_id                             = optional(string, null)<br>    instance_initiated_shutdown_behavior = optional(string, "terminate")<br>    key_name                             = optional(string, "")<br>    user_data                            = optional(string, "")<br>    enable_monitoring                    = optional(bool, true)<br>    instance_warmup_period               = optional(number, 300)<br>    maximum_scaling_step_size            = optional(number, 1)<br>    minimum_scaling_step_size            = optional(number, 1)<br>    target_capacity_utilization          = optional(number, 100)<br>    ebs_optimized                        = optional(bool, false)<br>    associate_public_ip_address          = optional(bool, false)<br>    block_device_mappings = optional(list(object({<br>      device_name  = string<br>      no_device    = bool<br>      virtual_name = string<br>      ebs = object({<br>        delete_on_termination = bool<br>        encrypted             = bool<br>        iops                  = number<br>        kms_key_id            = string<br>        snapshot_id           = string<br>        volume_size           = number<br>        volume_type           = string<br>      })<br>    })), [])<br>    instance_market_options = optional(object({<br>      market_type = string<br>      spot_options = object({<br>        block_duration_minutes         = number<br>        instance_interruption_behavior = string<br>        max_price                      = number<br>        spot_instance_type             = string<br>        valid_until                    = string<br>      })<br>    }))<br>    instance_refresh = optional(object({<br>      strategy = string<br>      preferences = object({<br>        instance_warmup        = number<br>        min_healthy_percentage = number<br>      })<br>      triggers = list(string)<br>    }))<br>    mixed_instances_policy = optional(object({<br>      instances_distribution = object({<br>        on_demand_allocation_strategy            = string<br>        on_demand_base_capacity                  = number<br>        on_demand_percentage_above_base_capacity = number<br>        spot_allocation_strategy                 = string<br>        spot_instance_pools                      = number<br>        spot_max_price                           = string<br>      })<br>      }), {<br>      instances_distribution = null<br>    })<br>    placement = optional(object({<br>      affinity          = string<br>      availability_zone = string<br>      group_name        = string<br>      host_id           = string<br>      tenancy           = string<br>    }))<br>    credit_specification = optional(object({<br>      cpu_credits = string<br>    }))<br>    elastic_gpu_specifications = optional(object({<br>      type = string<br>    }))<br>    disable_api_termination   = optional(bool, false)<br>    default_cooldown          = optional(number, 300)<br>    health_check_grace_period = optional(number, 300)<br>    force_delete              = optional(bool, false)<br>    termination_policies      = optional(list(string), ["Default"])<br>    suspended_processes       = optional(list(string), [])<br>    placement_group           = optional(string, "")<br>    metrics_granularity       = optional(string, "1Minute")<br>    enabled_metrics = optional(list(string), [<br>      "GroupMinSize",<br>      "GroupMaxSize",<br>      "GroupDesiredCapacity",<br>      "GroupInServiceInstances",<br>      "GroupPendingInstances",<br>      "GroupStandbyInstances",<br>      "GroupTerminatingInstances",<br>      "GroupTotalInstances",<br>      "GroupInServiceCapacity",<br>      "GroupPendingCapacity",<br>      "GroupStandbyCapacity",<br>      "GroupTerminatingCapacity",<br>      "GroupTotalCapacity",<br>      "WarmPoolDesiredCapacity",<br>      "WarmPoolWarmedCapacity",<br>      "WarmPoolPendingCapacity",<br>      "WarmPoolTerminatingCapacity",<br>      "WarmPoolTotalCapacity",<br>      "GroupAndWarmPoolDesiredCapacity",<br>      "GroupAndWarmPoolTotalCapacity",<br>    ])<br>    wait_for_capacity_timeout            = optional(string, "10m")<br>    service_linked_role_arn              = optional(string, "")<br>    metadata_http_endpoint_enabled       = optional(bool, true)<br>    metadata_http_put_response_hop_limit = optional(number, 2)<br>    metadata_http_tokens_required        = optional(bool, true)<br>    metadata_http_protocol_ipv6_enabled  = optional(bool, false)<br>    tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])<br>    max_instance_lifetime                = optional(number, null)<br>    capacity_rebalance                   = optional(bool, false)<br>    update_default_version               = optional(bool, false)<br>    warm_pool = optional(object({<br>      pool_state                  = string<br>      min_size                    = number<br>      max_group_prepared_capacity = number<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_capacity_providers_ec2"></a> [capacity\_providers\_ec2](#input\_capacity\_providers\_ec2) | EC2 autoscale groups capacity providers | <pre>map(object({<br>    instance_type      = string<br>    max_size           = number<br>    min_size           = number<br>    subnet_ids         = list(string)<br>    security_group_ids = list(string)<br><br>    image_id                             = optional(string, null)<br>    instance_initiated_shutdown_behavior = optional(string, "terminate")<br>    key_name                             = optional(string, "")<br>    user_data                            = optional(string, "")<br>    enable_monitoring                    = optional(bool, true)<br>    instance_warmup_period               = optional(number, 300)<br>    maximum_scaling_step_size            = optional(number, 1)<br>    minimum_scaling_step_size            = optional(number, 1)<br>    target_capacity_utilization          = optional(number, 100)<br>    ebs_optimized                        = optional(bool, false)<br>    associate_public_ip_address          = optional(bool, false)<br>    block_device_mappings = optional(list(object({<br>      device_name  = string<br>      no_device    = bool<br>      virtual_name = string<br>      ebs = object({<br>        delete_on_termination = bool<br>        encrypted             = bool<br>        iops                  = number<br>        kms_key_id            = string<br>        snapshot_id           = string<br>        volume_size           = number<br>        volume_type           = string<br>      })<br>    })), [])<br>    instance_market_options = optional(object({<br>      market_type = string<br>      spot_options = object({<br>        block_duration_minutes         = number<br>        instance_interruption_behavior = string<br>        max_price                      = number<br>        spot_instance_type             = string<br>        valid_until                    = string<br>      })<br>    }))<br>    instance_refresh = optional(object({<br>      strategy = string<br>      preferences = object({<br>        instance_warmup        = number<br>        min_healthy_percentage = number<br>      })<br>      triggers = list(string)<br>    }))<br>    mixed_instances_policy = optional(object({<br>      instances_distribution = object({<br>        on_demand_allocation_strategy            = string<br>        on_demand_base_capacity                  = number<br>        on_demand_percentage_above_base_capacity = number<br>        spot_allocation_strategy                 = string<br>        spot_instance_pools                      = number<br>        spot_max_price                           = string<br>      })<br>    }))<br>    placement = optional(object({<br>      affinity          = string<br>      availability_zone = string<br>      group_name        = string<br>      host_id           = string<br>      tenancy           = string<br>    }))<br>    credit_specification = optional(object({<br>      cpu_credits = string<br>    }))<br>    elastic_gpu_specifications = optional(object({<br>      type = string<br>    }))<br>    disable_api_termination   = optional(bool, false)<br>    default_cooldown          = optional(number, 300)<br>    health_check_grace_period = optional(number, 300)<br>    force_delete              = optional(bool, false)<br>    termination_policies      = optional(list(string), ["Default"])<br>    suspended_processes       = optional(list(string), [])<br>    placement_group           = optional(string, "")<br>    metrics_granularity       = optional(string, "1Minute")<br>    enabled_metrics = optional(list(string), [<br>      "GroupMinSize",<br>      "GroupMaxSize",<br>      "GroupDesiredCapacity",<br>      "GroupInServiceInstances",<br>      "GroupPendingInstances",<br>      "GroupStandbyInstances",<br>      "GroupTerminatingInstances",<br>      "GroupTotalInstances",<br>      "GroupInServiceCapacity",<br>      "GroupPendingCapacity",<br>      "GroupStandbyCapacity",<br>      "GroupTerminatingCapacity",<br>      "GroupTotalCapacity",<br>      "WarmPoolDesiredCapacity",<br>      "WarmPoolWarmedCapacity",<br>      "WarmPoolPendingCapacity",<br>      "WarmPoolTerminatingCapacity",<br>      "WarmPoolTotalCapacity",<br>      "GroupAndWarmPoolDesiredCapacity",<br>      "GroupAndWarmPoolTotalCapacity",<br>    ])<br>    wait_for_capacity_timeout            = optional(string, "10m")<br>    service_linked_role_arn              = optional(string, "")<br>    metadata_http_endpoint_enabled       = optional(bool, true)<br>    metadata_http_put_response_hop_limit = optional(number, 2)<br>    metadata_http_tokens_required        = optional(bool, true)<br>    metadata_http_protocol_ipv6_enabled  = optional(bool, false)<br>    tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])<br>    max_instance_lifetime                = optional(number, null)<br>    capacity_rebalance                   = optional(bool, false)<br>    update_default_version               = optional(bool, false)<br>    warm_pool = optional(object({<br>      pool_state                  = string<br>      min_size                    = number<br>      max_group_prepared_capacity = number<br>    }))<br>  }))</pre> | `{}` | no |
 | <a name="input_capacity_providers_fargate"></a> [capacity\_providers\_fargate](#input\_capacity\_providers\_fargate) | Use FARGATE capacity provider | `bool` | `true` | no |
 | <a name="input_capacity_providers_fargate_spot"></a> [capacity\_providers\_fargate\_spot](#input\_capacity\_providers\_fargate\_spot) | Use FARGATE\_SPOT capacity provider | `bool` | `false` | no |
 | <a name="input_container_insights_enabled"></a> [container\_insights\_enabled](#input\_container\_insights\_enabled) | Whether or not to enable container insights | `bool` | `true` | no |
@@ -259,13 +241,6 @@ Available targets:
 <!-- markdownlint-restore -->
 
 
-
-## Share the Love
-
-Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-ecs-cluster)! (it helps us **a lot**)
-
-
-
 ## Related Projects
 
 Check out these related projects.
@@ -286,16 +261,49 @@ For additional context, refer to some of these links.
 - [terraform-aws-ec2-autoscale-group](https://github.com/cloudposse/terraform-aws-ec2-autoscale-group) - Terraform module to provision Auto Scaling Group and Launch Template on AWS.
 
 
-## Help
+## ✨ Contributing
 
-**Got a question?** We got answers.
+This project is under active development, and we encourage contributions from our community. 
+Many thanks to our outstanding contributors:
 
-File a GitHub [issue](https://github.com/cloudposse/terraform-aws-ecs-cluster/issues), send us an [email][email] or join our [Slack Community][slack].
+<a href="https://github.com/cloudposse/terraform-aws-ecs-cluster/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=cloudposse/terraform-aws-ecs-cluster&max=24" />
+</a>
 
-[![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
+### 🐛 Bug Reports & Feature Requests
 
-## DevOps Accelerator for Startups
+Please use the [issue tracker](https://github.com/cloudposse/terraform-aws-ecs-cluster/issues) to report any bugs or file feature requests.
 
+### 💻 Developing
+
+If you are interested in being a contributor and want to get involved in developing this project or [help out](https://cpco.io/help-out) with our other projects, we would love to hear from you! Shoot us an [email][email].
+
+In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
+
+ 1. **Fork** the repo on GitHub
+ 2. **Clone** the project to your own machine
+ 3. **Commit** changes to your own branch
+ 4. **Push** your work back up to your fork
+ 5. Submit a **Pull Request** so that we can review your changes
+
+**NOTE:** Be sure to merge the latest changes from "upstream" before making a pull request!
+
+### 🌎 Slack Community
+
+Join our [Open Source Community][slack] on Slack. It's **FREE** for everyone! Our "SweetOps" community is where you get to talk with others who share a similar vision for how to rollout and manage infrastructure. This is the best place to talk shop, ask questions, solicit feedback, and work together as a community to build totally *sweet* infrastructure.
+
+### 📰 Newsletter
+
+Sign up for [our newsletter][newsletter] that covers everything on our technology radar.  Receive updates on what we're up to on GitHub as well as awesome new projects we discover.
+
+### 📆 Office Hours <img src="https://img.cloudposse.com/fit-in/200x200/https://cloudposse.com/wp-content/uploads/2019/08/Powered-by-Zoom.png" align="right" />
+
+[Join us every Wednesday via Zoom][office_hours] for our weekly "Lunch & Learn" sessions. It's **FREE** for everyone!
+
+## About 
+
+This project is maintained and funded by [Cloud Posse, LLC][website]. 
+<a href="https://cpco.io/homepage"><img src="https://cloudposse.com/logo-300x69.svg" align="right" /></a>
 
 We are a [**DevOps Accelerator**][commercial_support]. We'll help you build your cloud infrastructure from the ground up so you can own it. Then we'll show you how to operate it and stick around for as long as you need us.
 
@@ -316,61 +324,7 @@ We deliver 10x the value for a fraction of the cost of a full-time engineer. Our
 - **Code Reviews.** You'll receive constructive feedback on Pull Requests.
 - **Bug Fixes.** We'll rapidly work with you to fix any bugs in our projects.
 
-## Slack Community
-
-Join our [Open Source Community][slack] on Slack. It's **FREE** for everyone! Our "SweetOps" community is where you get to talk with others who share a similar vision for how to rollout and manage infrastructure. This is the best place to talk shop, ask questions, solicit feedback, and work together as a community to build totally *sweet* infrastructure.
-
-## Newsletter
-
-Sign up for [our newsletter][newsletter] that covers everything on our technology radar.  Receive updates on what we're up to on GitHub as well as awesome new projects we discover.
-
-## Office Hours
-
-[Join us every Wednesday via Zoom][office_hours] for our weekly "Lunch & Learn" sessions. It's **FREE** for everyone!
-
-[![zoom](https://img.cloudposse.com/fit-in/200x200/https://cloudposse.com/wp-content/uploads/2019/08/Powered-by-Zoom.png")][office_hours]
-
-## ✨ Contributing
-
-
-
-This project is under active development, and we encourage contributions from our community. 
-Many thanks to our outstanding contributors:
-
-<a href="https://github.com/cloudposse/terraform-aws-ecs-cluster/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=cloudposse/terraform-aws-ecs-cluster&max=24" />
-</a>
-
-
-
-### Bug Reports & Feature Requests
-
-Please use the [issue tracker](https://github.com/cloudposse/terraform-aws-ecs-cluster/issues) to report any bugs or file feature requests.
-
-### Developing
-
-If you are interested in being a contributor and want to get involved in developing this project or [help out](https://cpco.io/help-out) with our other projects, we would love to hear from you! Shoot us an [email][email].
-
-In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
-
- 1. **Fork** the repo on GitHub
- 2. **Clone** the project to your own machine
- 3. **Commit** changes to your own branch
- 4. **Push** your work back up to your fork
- 5. Submit a **Pull Request** so that we can review your changes
-
-**NOTE:** Be sure to merge the latest changes from "upstream" before making a pull request!
-
-
-
-## Copyrights
-
-Copyright © 2021-2023 [Cloud Posse, LLC](https://cloudposse.com)
-
-
-
-
-
+[![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
 ## License
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -396,29 +350,14 @@ specific language governing permissions and limitations
 under the License.
 ```
 
-
-
-
-
-
-
-
-
 ## Trademarks
 
 All other trademarks referenced herein are the property of their respective owners.
+## Copyrights
 
-## About
+Copyright © 2021-2023 [Cloud Posse, LLC](https://cloudposse.com)
 
-This project is maintained and funded by [Cloud Posse, LLC][website]. Like it? Please let us know by [leaving a testimonial][testimonial]!
-
-[![Cloud Posse][logo]][website]
-
-We're a [DevOps Professional Services][hire] company based in Los Angeles, CA. We ❤️  [Open Source Software][we_love_open_source].
-
-We offer [paid support][commercial_support] on all of our projects.
-
-Check out [our other projects][github], [follow us on twitter][twitter], [apply for a job][jobs], or [hire us][hire] to help with your cloud strategy and implementation.[![README Footer][readme_footer_img]][readme_footer_link]
+[![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
 <!-- markdownlint-disable -->
   [logo]: https://cloudposse.com/logo-300x69.svg
@@ -429,7 +368,6 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=hire
   [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=slack
   [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=twitter
-  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=testimonial
   [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=office_hours
   [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=newsletter
   [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-cluster&utm_content=email

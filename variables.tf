@@ -104,9 +104,7 @@ variable "capacity_providers_ec2" {
         spot_instance_pools                      = number
         spot_max_price                           = string
       })
-      }), {
-      instances_distribution = null
-    })
+    }))
     placement = optional(object({
       affinity          = string
       availability_zone = string
