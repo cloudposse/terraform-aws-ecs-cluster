@@ -24,6 +24,7 @@ locals {
   ]
 }
 
+
 resource "aws_ecs_cluster" "default" {
   count = local.enabled ? 1 : 0
 
@@ -48,6 +49,13 @@ resource "aws_ecs_cluster" "default" {
           s3_key_prefix                  = log_configuration.value["s3_key_prefix"]
         }
       }
+    }
+  }
+
+  dynamic "service_connect_defaults" {
+    for_each = var.service_discovery_namespace_arn != null ? [var.service_discovery_namespace_arn] : []
+    content {
+      namespace = service_connect_defaults.value
     }
   }
 

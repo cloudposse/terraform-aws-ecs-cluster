@@ -22,7 +22,7 @@ variable "logging" {
 
 variable "log_configuration" {
   description = "The log configuration for the results of the execute command actions Required when logging is OVERRIDE"
-  type = object({
+  type        = object({
     cloud_watch_encryption_enabled = string
     cloud_watch_log_group_name     = string
     s3_bucket_name                 = string
@@ -45,7 +45,7 @@ variable "capacity_providers_fargate_spot" {
 
 variable "capacity_providers_ec2" {
   description = "EC2 autoscale groups capacity providers"
-  type = map(object({
+  type        = map(object({
     instance_type      = string
     max_size           = number
     min_size           = number
@@ -63,11 +63,11 @@ variable "capacity_providers_ec2" {
     target_capacity_utilization          = optional(number, 100)
     ebs_optimized                        = optional(bool, false)
     associate_public_ip_address          = optional(bool, false)
-    block_device_mappings = optional(list(object({
+    block_device_mappings                = optional(list(object({
       device_name  = string
       no_device    = bool
       virtual_name = string
-      ebs = object({
+      ebs          = object({
         delete_on_termination = bool
         encrypted             = bool
         iops                  = number
@@ -78,7 +78,7 @@ variable "capacity_providers_ec2" {
       })
     })), [])
     instance_market_options = optional(object({
-      market_type = string
+      market_type  = string
       spot_options = object({
         block_duration_minutes         = number
         instance_interruption_behavior = string
@@ -88,7 +88,7 @@ variable "capacity_providers_ec2" {
       })
     }))
     instance_refresh = optional(object({
-      strategy = string
+      strategy    = string
       preferences = object({
         instance_warmup        = number
         min_healthy_percentage = number
@@ -126,7 +126,7 @@ variable "capacity_providers_ec2" {
     suspended_processes       = optional(list(string), [])
     placement_group           = optional(string, "")
     metrics_granularity       = optional(string, "1Minute")
-    enabled_metrics = optional(list(string), [
+    enabled_metrics           = optional(list(string), [
       "GroupMinSize",
       "GroupMaxSize",
       "GroupDesiredCapacity",
@@ -158,7 +158,7 @@ variable "capacity_providers_ec2" {
     max_instance_lifetime                = optional(number, null)
     capacity_rebalance                   = optional(bool, false)
     update_default_version               = optional(bool, false)
-    warm_pool = optional(object({
+    warm_pool                            = optional(object({
       pool_state                  = string
       min_size                    = number
       max_group_prepared_capacity = number
@@ -173,7 +173,7 @@ variable "capacity_providers_ec2" {
 
 variable "external_ec2_capacity_providers" {
   description = "External EC2 autoscale groups capacity providers"
-  type = map(object({
+  type        = map(object({
     autoscaling_group_arn          = string
     managed_termination_protection = bool
     managed_scaling_status         = bool
@@ -191,7 +191,7 @@ variable "external_ec2_capacity_providers" {
 
 variable "default_capacity_strategy" {
   description = "The capacity provider strategy to use by default for the cluster"
-  type = object({
+  type        = object({
     base = object({
       provider = string
       value    = number
@@ -205,4 +205,10 @@ variable "default_capacity_strategy" {
     }
     weights = {}
   }
+}
+
+variable "service_discovery_namespace_arn" {
+  description = "The Amazon Resource Name (ARN) of the service discovery namespace that you want to use for default service discovery."
+  type        = string
+  default     = null
 }
