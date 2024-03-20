@@ -206,3 +206,9 @@ variable "default_capacity_strategy" {
     weights = {}
   }
 }
+
+variable "service_discovery_namespace_arn" {
+  description = "The Amazon Resource Name (ARN) of the service discovery namespace that you want to use for default service discovery."
+  type        = string
+  default     = null
+}
