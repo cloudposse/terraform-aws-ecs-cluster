@@ -98,6 +98,8 @@ module "autoscale_group" {
   max_instance_lifetime                = each.value["max_instance_lifetime"]
   capacity_rebalance                   = each.value["capacity_rebalance"]
   warm_pool                            = each.value["warm_pool"]
+  instance_reuse_policy                = each.value["instance_reuse_policy"]
+
   update_default_version               = each.value["update_default_version"]
 }
 
