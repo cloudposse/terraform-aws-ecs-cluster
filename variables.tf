@@ -174,6 +174,7 @@ variable "capacity_providers_ec2" {
 variable "external_ec2_capacity_providers" {
   description = "External EC2 autoscale groups capacity providers"
   type = map(object({
+    name                           = optional(string, null)
     autoscaling_group_arn          = string
     managed_termination_protection = bool
     managed_scaling_status         = bool
