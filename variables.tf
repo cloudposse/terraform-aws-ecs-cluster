@@ -72,6 +72,7 @@ variable "capacity_providers_ec2" {
         delete_on_termination = bool
         encrypted             = bool
         iops                  = number
+        throughput            = number
         kms_key_id            = string
         snapshot_id           = string
         volume_size           = number
