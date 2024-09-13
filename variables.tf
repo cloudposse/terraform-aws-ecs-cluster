@@ -165,6 +165,9 @@ variable "capacity_providers_ec2" {
       min_size                    = number
       max_group_prepared_capacity = number
     }))
+    instance_reuse_policy = optional(object({
+      reuse_on_scale_in = optional(bool, false)
+    }), null)
   }))
   default = {}
   validation {
