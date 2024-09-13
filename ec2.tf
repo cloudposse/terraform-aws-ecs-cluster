@@ -105,7 +105,7 @@ module "autoscale_group" {
 
 resource "aws_ecs_capacity_provider" "ec2" {
   for_each = local.ec2_capacity_providers
-  name     = each.key
+  name     = coalesce(each.value["name"], each.key)
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = module.autoscale_group[each.key].autoscaling_group_arn
