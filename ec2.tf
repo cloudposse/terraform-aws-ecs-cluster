@@ -18,7 +18,7 @@ locals {
 echo ECS_CLUSTER="${local.cluster_name}" >> /etc/ecs/ecs.config
 echo ECS_ENABLE_CONTAINER_METADATA=true >> /etc/ecs/ecs.config
 echo ECS_POLL_METRICS=true >> /etc/ecs/ecs.config
-echo ECS_ENABLE_SPOT_INSTANCE_DRAINING=${provider.instance_market_options != null && provider.mixed_instances_policy != null} >> /etc/ecs/ecs.config
+echo ECS_ENABLE_SPOT_INSTANCE_DRAINING=${provider.mixed_instances_policy != null} >> /etc/ecs/ecs.config
 echo ECS_WARM_POOLS_CHECK=${provider.warm_pool != null} >> /etc/ecs/ecs.config
 
 ${replace(provider.user_data, "#!/bin/bash", "")}
