@@ -41,7 +41,7 @@ module "autoscale_group" {
   for_each = local.ec2_capacity_providers
 
   source  = "cloudposse/ec2-autoscale-group/aws"
-  version = "0.39.0"
+  version = "0.40.0"
 
   context = module.ecs_labels[each.key].context
 
@@ -71,7 +71,7 @@ module "autoscale_group" {
   block_device_mappings      = jsondecode(jsonencode(each.value["block_device_mappings"]))
   instance_market_options    = jsondecode(jsonencode(each.value["instance_market_options"]))
   instance_refresh           = each.value["instance_refresh"]
-  mixed_instances_policy     = each.value["mixed_instances_policy"] == null ? null : merge(each.value["mixed_instances_policy"], { override = null })
+  mixed_instances_policy     = each.value["mixed_instances_policy"]
   placement                  = each.value["placement"]
   credit_specification       = each.value["credit_specification"]
   elastic_gpu_specifications = each.value["elastic_gpu_specifications"]
