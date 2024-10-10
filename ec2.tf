@@ -41,7 +41,7 @@ module "autoscale_group" {
   for_each = local.ec2_capacity_providers
 
   source  = "cloudposse/ec2-autoscale-group/aws"
-  version = "0.39.0"
+  version = "0.40.0"
 
   context = module.ecs_labels[each.key].context
 
