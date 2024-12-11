@@ -106,6 +106,10 @@ variable "capacity_providers_ec2" {
         spot_instance_pools                      = number
         spot_max_price                           = string
       })
+      override = optional(list(object({
+        instance_type     = string
+        weighted_capacity = number
+      })))
     }))
     placement = optional(object({
       affinity          = string
