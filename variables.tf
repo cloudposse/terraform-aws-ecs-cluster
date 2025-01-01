@@ -11,7 +11,12 @@ variable "kms_key_id" {
 }
 
 variable "logging" {
-  description = "The AWS Key Management Service key ID to encrypt the data between the local client and the container. (Valid values: 'NONE', 'DEFAULT', 'OVERRIDE')"
+  description = <<-EOT
+    The log setting to use for redirecting logs for your execute command results. The following log settings are available:
+      * `NONE`: The execute command session is not logged.
+      * `DEFAULT`: The `awslogs` configuration in the task definition is used. If no logging parameter is specified, it defaults to this value. If no `awslogs` log driver is configured in the task definition, the output won't be logged.
+      * `OVERRIDE`: Specify the logging details as a part of logConfiguration. If the `OVERRIDE` logging option is specified, the logConfiguration is required.
+  EOT
   type        = string
   default     = "DEFAULT"
   validation {
