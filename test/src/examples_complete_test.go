@@ -98,6 +98,7 @@ func TestExamplesCompleteDisabled(t *testing.T) {
 			"attributes": attributes,
 			"enabled":    "false",
 		},
+		SetVarsAfterVarFiles: true,
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
