@@ -92,8 +92,12 @@ variable "capacity_providers_ec2" {
     instance_refresh = optional(object({
       strategy = string
       preferences = object({
-        instance_warmup        = number
-        min_healthy_percentage = number
+        instance_warmup              = number
+        min_healthy_percentage       = number
+        skip_matching                = bool
+        auto_rollback                = bool
+        scale_in_protected_instances = string
+        standby_instances            = string
       })
       triggers = list(string)
     }))
@@ -159,6 +163,7 @@ variable "capacity_providers_ec2" {
     tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])
     max_instance_lifetime                = optional(number, null)
     capacity_rebalance                   = optional(bool, false)
+    launch_template_version              = optional(string, "$Latest")
     update_default_version               = optional(bool, false)
     warm_pool = optional(object({
       pool_state                  = string
