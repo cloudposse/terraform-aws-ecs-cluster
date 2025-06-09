@@ -1,5 +1,5 @@
 locals {
-  enabled      = module.this.enabled
+  enabled      = module.context.enabled
   cluster_name = join("", aws_ecs_cluster.default[*].name)
 
   capacity_providers_fargate = [
@@ -28,7 +28,7 @@ locals {
 resource "aws_ecs_cluster" "default" {
   count = local.enabled ? 1 : 0
 
-  name = module.this.id
+  name = module.context.id
 
   setting {
     name  = "containerInsights"
@@ -59,7 +59,7 @@ resource "aws_ecs_cluster" "default" {
     }
   }
 
-  tags = module.this.tags
+  tags = module.context.tags
 }
 
 resource "aws_ecs_cluster_capacity_providers" "default" {

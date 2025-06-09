@@ -1,26 +1,26 @@
 module "vpc" {
-  source                  = "cloudposse/vpc/aws"
-  version                 = "2.1.0"
+  source                  = "registry.terraform.io/SevenPico/vpc/aws"
+  version                 = "3.0.2"
   ipv4_primary_cidr_block = "172.16.0.0/16"
-  context                 = module.this.context
+  context                 = module.context.self
 }
 
 module "subnets" {
-  source               = "cloudposse/dynamic-subnets/aws"
-  version              = "2.3.0"
+  source               = "registry.terraform.io/SevenPico/dynamic-subnets/aws"
+  version              = "3.1.2"
   availability_zones   = var.availability_zones
   vpc_id               = module.vpc.vpc_id
   igw_id               = [module.vpc.igw_id]
   ipv4_cidr_block      = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled  = false
   nat_instance_enabled = false
-  context              = module.this.context
+  context              = module.context.self
 }
 
 module "ecs_cluster" {
   source = "../.."
 
-  context = module.this.context
+  context = module.context.self
 
   container_insights_enabled      = true
   capacity_providers_fargate      = true
@@ -46,6 +46,7 @@ module "ecs_cluster" {
       target_capacity_utilization    = 100
     }
   }
+  policy_document = []
 }
 
 locals {
@@ -69,7 +70,7 @@ module "autoscale_group" {
   source  = "cloudposse/ec2-autoscale-group/aws"
   version = "0.34.2"
 
-  context = module.this.context
+  context = module.context.self
 
   image_id                    = join("", data.aws_ssm_parameter.ami[*].value)
   instance_type               = "t3.medium"

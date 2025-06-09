@@ -217,3 +217,9 @@ variable "service_discovery_namespace_arn" {
   type        = string
   default     = null
 }
+
+variable "policy_document" {
+  description = "A list of IAM policy documents (JSON) to attach inline to the role"
+  type        = list(string)
+  default     = []
+}
