@@ -38,6 +38,7 @@ module "ecs_cluster" {
   }
   external_ec2_capacity_providers = {
     external_ec2_default = {
+      name                           = "external-ec2-default-${local.suffix}"
       autoscaling_group_arn          = join("", module.autoscale_group[*].autoscaling_group_arn)
       managed_termination_protection = false
       managed_scaling_status         = false
