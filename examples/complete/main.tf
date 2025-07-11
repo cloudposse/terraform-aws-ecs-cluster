@@ -30,7 +30,8 @@ module "ecs_cluster" {
   capacity_providers_fargate      = true
   capacity_providers_fargate_spot = true
   capacity_providers_ec2 = {
-    "ec2_default_${random_pet.suffix.id}" = {
+    ec2_default = {
+      name                        = "ec2-default-${random_pet.suffix.id}"
       instance_type               = "t3.medium"
       security_group_ids          = [module.vpc.vpc_default_security_group_id]
       subnet_ids                  = module.subnets.private_subnet_ids
@@ -40,7 +41,7 @@ module "ecs_cluster" {
     }
   }
   external_ec2_capacity_providers = {
-    "external_ec2_default_${random_pet.suffix.id}" = {
+    external_ec2_default = {
       autoscaling_group_arn          = join("", module.autoscale_group[*].autoscaling_group_arn)
       managed_termination_protection = false
       managed_scaling_status         = false
