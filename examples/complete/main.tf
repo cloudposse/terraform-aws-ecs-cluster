@@ -51,7 +51,7 @@ module "ecs_cluster" {
 }
 
 locals {
-  suffix       = formatdate("YYYYMMDDhhmm", timestamp())
+  suffix       = formatdate("YYYYMMDDhhmmss", timestamp())
   cluster_name = var.enabled ? module.ecs_cluster.name : ""
   user_data    = <<EOT
 #!/bin/bash
