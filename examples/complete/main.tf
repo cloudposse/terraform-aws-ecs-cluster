@@ -17,10 +17,6 @@ module "subnets" {
   context              = module.this.context
 }
 
-resource "random_pet" "suffix" {
-  length = 2
-}
-
 module "ecs_cluster" {
   source = "../.."
 
@@ -31,7 +27,7 @@ module "ecs_cluster" {
   capacity_providers_fargate_spot = true
   capacity_providers_ec2 = {
     ec2_default = {
-      name                        = "ec2-default-${random_pet.suffix.id}"
+      name                        = "ec2-default-${local.suffix}"
       instance_type               = "t3.medium"
       security_group_ids          = [module.vpc.vpc_default_security_group_id]
       subnet_ids                  = module.subnets.private_subnet_ids
@@ -54,6 +50,7 @@ module "ecs_cluster" {
 }
 
 locals {
+  suffix       = formatdate("YYYYMMDDhhmm", timestamp())
   cluster_name = var.enabled ? module.ecs_cluster.name : ""
   user_data    = <<EOT
 #!/bin/bash
