@@ -9,6 +9,8 @@ locals {
     } : name if is_enabled
   ]
 
+  capacity_providers_enabled = var.capacity_providers_fargate || length(var.capacity_providers_ec2) > 0 || length(var.external_ec2_capacity_providers) > 0
+
   capacity_providers = distinct(concat(
     [for key, value in aws_ecs_capacity_provider.ec2 : value.name],
     [for key, value in aws_ecs_capacity_provider.external_ec2 : value.name],
@@ -63,7 +65,7 @@ resource "aws_ecs_cluster" "default" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "default" {
-  count = local.enabled && length(local.capacity_providers) > 0 ? 1 : 0
+  count = local.enabled && local.capacity_providers_enabled ? 1 : 0
 
   cluster_name = local.cluster_name
 
