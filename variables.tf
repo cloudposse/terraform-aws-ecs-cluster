@@ -121,9 +121,6 @@ variable "capacity_providers_ec2" {
     credit_specification = optional(object({
       cpu_credits = string
     }))
-    elastic_gpu_specifications = optional(object({
-      type = string
-    }))
     disable_api_termination   = optional(bool, false)
     default_cooldown          = optional(number, 300)
     health_check_grace_period = optional(number, 300)
