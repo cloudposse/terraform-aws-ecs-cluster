@@ -99,7 +99,8 @@ module "autoscale_group" {
   warm_pool                            = each.value["warm_pool"]
   instance_reuse_policy                = each.value["instance_reuse_policy"]
 
-  update_default_version = each.value["update_default_version"]
+  launch_template_version = each.value["launch_template_version"]
+  update_default_version  = each.value["update_default_version"]
 }
 
 resource "aws_ecs_capacity_provider" "ec2" {
