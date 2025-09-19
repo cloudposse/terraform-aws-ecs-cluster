@@ -4,7 +4,7 @@
 #
 
 # Name of this project
-name: AWS ECS cluster
+name: terraform-aws-ecs-cluster
 
 # Logo for this project
 #logo: docs/logo.png
