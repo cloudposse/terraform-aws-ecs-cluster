@@ -22,7 +22,7 @@ module "ecs_cluster" {
 
   context = module.this.context
 
-  container_insights_mode         = "enhanced"
+  container_insights_mode         = "enhanced" # "enabled" by default if not specified, "enhanced" costs more but provides more detailed health and metrics.
   capacity_providers_fargate      = true
   capacity_providers_fargate_spot = true
   capacity_providers_ec2 = {
