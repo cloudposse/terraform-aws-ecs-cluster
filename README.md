@@ -69,7 +69,7 @@ module "ecs_cluster" {
   namespace = "eg"
   name      = "example"
 
-  container_insights_mode         = "enabled"
+  container_insights_mode         = "enhanced" # "enabled" by default if not specified, "enhanced" costs more but provides more detailed health and metrics.
   capacity_providers_fargate      = true
 }
 ```
