@@ -4,7 +4,7 @@
 #
 
 # Name of this project
-name: AWS ECS cluster
+name: terraform-aws-ecs-cluster
 
 # Logo for this project
 #logo: docs/logo.png
@@ -31,7 +31,7 @@ badges:
     url: https://github.com/cloudposse/terraform-aws-ecs-cluster/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
@@ -88,7 +88,7 @@ usage: |-
     namespace = "eg"
     name      = "example"
 
-    container_insights_enabled      = true
+    container_insights_mode         = "enhanced" # "enabled" by default if not specified, "enhanced" costs more but provides more detailed health and metrics.
     capacity_providers_fargate      = true
   }
   ```
@@ -132,7 +132,7 @@ usage: |-
 
     context = module.label.context
 
-    container_insights_enabled      = true
+    container_insights_mode         = "enabled"
     capacity_providers_fargate      = true
     capacity_providers_fargate_spot = true
     capacity_providers_ec2 = {
@@ -149,9 +149,5 @@ usage: |-
   ```
 
 # Other files to include in this README from the project folder
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
-# Contributors to this project
+include: []
 contributors: []

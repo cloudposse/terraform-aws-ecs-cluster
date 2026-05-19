@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_iam_instance_profile" "default" {
-  count = local.enabled ? 1 : 0
+  count = local.enabled && length(var.capacity_providers_ec2) > 0 ? 1 : 0
   name  = module.this.id
   role  = module.this.id
 }
