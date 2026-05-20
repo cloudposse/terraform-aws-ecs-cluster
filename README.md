@@ -129,6 +129,48 @@ module "ecs_cluster" {
 }
 ```
 
+### ECS cluster with EC2 capacity provider using multiple instance type fallbacks
+
+Use `mixed_instances_policy.override` to specify a prioritised list of instance types. EC2 Auto Scaling
+will try each type in order, which improves availability resilience when a single instance type faces
+regional capacity constraints.
+
+```hcl
+module "ecs_cluster" {
+  source = "cloudposse/ecs-cluster/aws"
+
+  context = module.label.context
+
+  container_insights_mode = "enabled"
+  capacity_providers_ec2 = {
+    gpu = {
+      instance_type               = "g4dn.xlarge"
+      image_id                    = data.aws_ssm_parameter.ecs_gpu_ami.value
+      security_group_ids          = [module.vpc.vpc_default_security_group_id]
+      subnet_ids                  = module.subnets.private_subnet_ids
+      associate_public_ip_address = false
+      min_size                    = 0
+      max_size                    = 4
+      mixed_instances_policy = {
+        instances_distribution = {
+          on_demand_allocation_strategy            = "prioritized"
+          on_demand_base_capacity                  = 0
+          on_demand_percentage_above_base_capacity = 100
+          spot_allocation_strategy                 = "capacity-optimized"
+          spot_instance_pools                      = 0
+          spot_max_price                           = ""
+        }
+        override = [
+          { instance_type = "g4dn.xlarge",  weighted_capacity = 1 },
+          { instance_type = "g4dn.2xlarge", weighted_capacity = 1 },
+          { instance_type = "g5.xlarge",    weighted_capacity = 1 },
+        ]
+      }
+    }
+  }
+}
+```
+
 > [!IMPORTANT]
 > In Cloud Posse's examples, we avoid pinning modules to specific versions to prevent discrepancies between the documentation
 > and the latest released versions. However, for your own projects, we strongly advise pinning each module to the exact version
