@@ -146,20 +146,20 @@ module "ecs_cluster" {
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_autoscale_group"></a> [autoscale\_group](#module\_autoscale\_group) | cloudposse/ec2-autoscale-group/aws | 0.41.1 |
 | <a name="module_ecs_labels"></a> [ecs\_labels](#module\_ecs\_labels) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
@@ -167,7 +167,7 @@ module "ecs_cluster" {
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_ecs_capacity_provider.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_capacity_provider) | resource |
 | [aws_ecs_capacity_provider.external_ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_capacity_provider) | resource |
 | [aws_ecs_cluster.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
@@ -175,14 +175,16 @@ module "ecs_cluster" {
 | [aws_iam_instance_profile.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
 | [aws_iam_role.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_ec2_instance_type.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_instance_type) | data source |
 | [aws_iam_policy_document.assume](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
-| [aws_ssm_parameter.ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
+| [aws_ssm_parameter.ami_arm64](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
+| [aws_ssm_parameter.ami_x86_64](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br/>This is for some rare cases where resources want additional configuration of tags<br/>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br/>in the order they appear in the list. New attributes are appended to the<br/>end of the list. The elements of the list are joined by the `delimiter`<br/>and treated as a single ID element. | `list(string)` | `[]` | no |
 | <a name="input_capacity_providers_ec2"></a> [capacity\_providers\_ec2](#input\_capacity\_providers\_ec2) | EC2 autoscale groups capacity providers | <pre>map(object({<br/>    name               = optional(string, null)<br/>    instance_type      = string<br/>    max_size           = number<br/>    min_size           = number<br/>    subnet_ids         = list(string)<br/>    security_group_ids = list(string)<br/><br/>    image_id                             = optional(string, null)<br/>    instance_initiated_shutdown_behavior = optional(string, "terminate")<br/>    key_name                             = optional(string, "")<br/>    user_data                            = optional(string, "")<br/>    enable_monitoring                    = optional(bool, true)<br/>    instance_warmup_period               = optional(number, 300)<br/>    maximum_scaling_step_size            = optional(number, 1)<br/>    minimum_scaling_step_size            = optional(number, 1)<br/>    target_capacity_utilization          = optional(number, 100)<br/>    ebs_optimized                        = optional(bool, false)<br/>    associate_public_ip_address          = optional(bool, false)<br/>    block_device_mappings = optional(list(object({<br/>      device_name  = string<br/>      no_device    = bool<br/>      virtual_name = string<br/>      ebs = object({<br/>        delete_on_termination = bool<br/>        encrypted             = bool<br/>        iops                  = number<br/>        throughput            = number<br/>        kms_key_id            = string<br/>        snapshot_id           = string<br/>        volume_size           = number<br/>        volume_type           = string<br/>      })<br/>    })), [])<br/>    instance_market_options = optional(object({<br/>      market_type = string<br/>      spot_options = object({<br/>        block_duration_minutes         = number<br/>        instance_interruption_behavior = string<br/>        max_price                      = number<br/>        spot_instance_type             = string<br/>        valid_until                    = string<br/>      })<br/>    }))<br/>    instance_refresh = optional(object({<br/>      strategy = string<br/>      preferences = object({<br/>        instance_warmup              = number<br/>        min_healthy_percentage       = number<br/>        skip_matching                = bool<br/>        auto_rollback                = bool<br/>        scale_in_protected_instances = string<br/>        standby_instances            = string<br/>      })<br/>      triggers = list(string)<br/>    }))<br/>    mixed_instances_policy = optional(object({<br/>      instances_distribution = object({<br/>        on_demand_allocation_strategy            = string<br/>        on_demand_base_capacity                  = number<br/>        on_demand_percentage_above_base_capacity = number<br/>        spot_allocation_strategy                 = string<br/>        spot_instance_pools                      = number<br/>        spot_max_price                           = string<br/>      })<br/>    }))<br/>    placement = optional(object({<br/>      affinity          = string<br/>      availability_zone = string<br/>      group_name        = string<br/>      host_id           = string<br/>      tenancy           = string<br/>    }))<br/>    credit_specification = optional(object({<br/>      cpu_credits = string<br/>    }))<br/>    disable_api_termination   = optional(bool, false)<br/>    default_cooldown          = optional(number, 300)<br/>    health_check_grace_period = optional(number, 300)<br/>    force_delete              = optional(bool, false)<br/>    termination_policies      = optional(list(string), ["Default"])<br/>    suspended_processes       = optional(list(string), [])<br/>    placement_group           = optional(string, "")<br/>    metrics_granularity       = optional(string, "1Minute")<br/>    enabled_metrics = optional(list(string), [<br/>      "GroupMinSize",<br/>      "GroupMaxSize",<br/>      "GroupDesiredCapacity",<br/>      "GroupInServiceInstances",<br/>      "GroupPendingInstances",<br/>      "GroupStandbyInstances",<br/>      "GroupTerminatingInstances",<br/>      "GroupTotalInstances",<br/>      "GroupInServiceCapacity",<br/>      "GroupPendingCapacity",<br/>      "GroupStandbyCapacity",<br/>      "GroupTerminatingCapacity",<br/>      "GroupTotalCapacity",<br/>      "WarmPoolDesiredCapacity",<br/>      "WarmPoolWarmedCapacity",<br/>      "WarmPoolPendingCapacity",<br/>      "WarmPoolTerminatingCapacity",<br/>      "WarmPoolTotalCapacity",<br/>      "GroupAndWarmPoolDesiredCapacity",<br/>      "GroupAndWarmPoolTotalCapacity",<br/>    ])<br/>    wait_for_capacity_timeout            = optional(string, "10m")<br/>    service_linked_role_arn              = optional(string, "")<br/>    metadata_http_endpoint_enabled       = optional(bool, true)<br/>    metadata_http_put_response_hop_limit = optional(number, 2)<br/>    metadata_http_tokens_required        = optional(bool, true)<br/>    metadata_http_protocol_ipv6_enabled  = optional(bool, false)<br/>    tag_specifications_resource_types    = optional(set(string), ["instance", "volume"])<br/>    max_instance_lifetime                = optional(number, null)<br/>    capacity_rebalance                   = optional(bool, false)<br/>    launch_template_version              = optional(string, "$Latest")<br/>    update_default_version               = optional(bool, false)<br/>    warm_pool = optional(object({<br/>      pool_state                  = string<br/>      min_size                    = number<br/>      max_group_prepared_capacity = number<br/>    }))<br/>    instance_reuse_policy = optional(object({<br/>      reuse_on_scale_in = optional(bool, false)<br/>    }), null)<br/>  }))</pre> | `{}` | no |
@@ -215,7 +217,7 @@ module "ecs_cluster" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_arn"></a> [arn](#output\_arn) | ECS cluster arn |
 | <a name="output_id"></a> [id](#output\_id) | ECS cluster id |
 | <a name="output_name"></a> [name](#output\_name) | ECS cluster name |
