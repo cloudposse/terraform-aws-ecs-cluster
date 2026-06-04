@@ -61,7 +61,7 @@ EOT
 
 data "aws_ssm_parameter" "ami" {
   count = var.enabled ? 1 : 0
-  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
 }
 
 module "autoscale_group" {
