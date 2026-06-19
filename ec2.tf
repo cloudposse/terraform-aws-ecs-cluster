@@ -1,6 +1,16 @@
-data "aws_ssm_parameter" "ami" {
+data "aws_ssm_parameter" "ami_x86_64" {
   count = local.enabled ? 1 : 0
-  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
+}
+
+data "aws_ssm_parameter" "ami_arm64" {
+  count = local.enabled ? 1 : 0
+  name  = "/aws/service/ecs/optimized-ami/amazon-linux-2023/arm64/recommended/image_id"
+}
+
+data "aws_ec2_instance_type" "default" {
+  for_each      = local.ec2_capacity_providers
+  instance_type = each.value["instance_type"]
 }
 
 locals {
@@ -45,7 +55,11 @@ module "autoscale_group" {
 
   context = module.ecs_labels[each.key].context
 
-  image_id      = each.value["image_id"] == null ? join("", data.aws_ssm_parameter.ami[*].value) : each.value["image_id"]
+  image_id = each.value["image_id"] == null ? (
+    contains(data.aws_ec2_instance_type.default[each.key].supported_architectures, "arm64")
+    ? join("", data.aws_ssm_parameter.ami_arm64[*].value)
+    : join("", data.aws_ssm_parameter.ami_x86_64[*].value)
+  ) : each.value["image_id"]
   instance_type = each.value["instance_type"]
 
 
