@@ -116,7 +116,7 @@ variable "capacity_providers_ec2" {
       })
       override = optional(list(object({
         instance_type     = string
-        weighted_capacity = number
+        weighted_capacity = optional(number)
       })))
     }))
     placement = optional(object({
