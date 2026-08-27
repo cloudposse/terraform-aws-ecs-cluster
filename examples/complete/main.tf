@@ -34,6 +34,38 @@ module "ecs_cluster" {
       min_size                    = 0
       max_size                    = 2
     }
+    ec2_mixed = {
+      instance_type               = "t3.medium"
+      security_group_ids          = [module.vpc.vpc_default_security_group_id]
+      subnet_ids                  = module.subnets.private_subnet_ids
+      associate_public_ip_address = false
+      min_size                    = 0
+      max_size                    = 4
+      mixed_instances_policy = {
+        instances_distribution = {
+          on_demand_allocation_strategy            = "prioritized"
+          on_demand_base_capacity                  = 1
+          on_demand_percentage_above_base_capacity = 25
+          spot_allocation_strategy                 = "capacity-optimized"
+          spot_instance_pools                      = 0
+          spot_max_price                           = ""
+        }
+        override = [
+          {
+            instance_type     = "t3.medium"
+            weighted_capacity = 1
+          },
+          {
+            instance_type     = "t3.large"
+            weighted_capacity = 2
+          },
+          {
+            instance_type     = "t3a.medium"
+            weighted_capacity = 1
+          },
+        ]
+      }
+    }
   }
   external_ec2_capacity_providers = {
     external_ec2_default = {
