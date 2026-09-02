@@ -50,12 +50,20 @@ func TestExamplesComplete(t *testing.T) {
   id := terraform.Output(t, terraformOptions, "id")
   name := terraform.Output(t, terraformOptions, "name")
   arn := terraform.Output(t, terraformOptions, "arn")
+  ec2CapacityProviders := terraform.OutputMapOfObjects(t, terraformOptions, "ec2_capacity_providers")
 
   // Verify we're getting back the outputs we expect
   // Ensure we get the attribute included in the ID
   assert.Equal(t, "eg-ue2-test-example-"+randID, name)
   assert.Contains(t, id, "eg-ue2-test-example-"+randID)
   assert.Contains(t, arn, "eg-ue2-test-example-"+randID)
+
+  // Ensure the EC2 capacity provider details are exposed for use by aws_ecs_service
+  // and CloudWatch metric alarms
+  ec2Default, ok := ec2CapacityProviders["ec2_default"].(map[string]interface{})
+  assert.True(t, ok, "Expected an ec2_default EC2 capacity provider")
+  assert.Equal(t, "ec2_default", ec2Default["capacity_provider_name"])
+  assert.Contains(t, ec2Default["autoscaling_group_name"], "eg-ue2-test-example-"+randID)
 
   // ************************************************************************
   // This steps below are unusual, not generally part of the testing
