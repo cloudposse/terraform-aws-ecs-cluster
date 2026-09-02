@@ -148,6 +148,28 @@ usage: |-
   }
   ```
 
+  ### ECS service using an EC2 capacity provider
+
+  ```hcl
+  resource "aws_ecs_service" "default" {
+    # ...
+    cluster = module.ecs_cluster.arn
+
+    capacity_provider_strategy {
+      capacity_provider = module.ecs_cluster.ec2_capacity_providers["default"].capacity_provider_name
+      weight            = 1
+      base              = 1
+    }
+  }
+
+  resource "aws_cloudwatch_metric_alarm" "cpu_high" {
+    # ...
+    dimensions = {
+      AutoScalingGroupName = module.ecs_cluster.ec2_capacity_providers["default"].autoscaling_group_name
+    }
+  }
+  ```
+
 # Other files to include in this README from the project folder
 include: []
 contributors: []

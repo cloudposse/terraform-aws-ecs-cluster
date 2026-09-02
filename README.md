@@ -129,6 +129,28 @@ module "ecs_cluster" {
 }
 ```
 
+### ECS service using an EC2 capacity provider
+
+```hcl
+resource "aws_ecs_service" "default" {
+  # ...
+  cluster = module.ecs_cluster.arn
+
+  capacity_provider_strategy {
+    capacity_provider = module.ecs_cluster.ec2_capacity_providers["default"].capacity_provider_name
+    weight            = 1
+    base              = 1
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpu_high" {
+  # ...
+  dimensions = {
+    AutoScalingGroupName = module.ecs_cluster.ec2_capacity_providers["default"].autoscaling_group_name
+  }
+}
+```
+
 > [!IMPORTANT]
 > In Cloud Posse's examples, we avoid pinning modules to specific versions to prevent discrepancies between the documentation
 > and the latest released versions. However, for your own projects, we strongly advise pinning each module to the exact version
@@ -219,6 +241,7 @@ module "ecs_cluster" {
 | Name | Description |
 | ---- | ----------- |
 | <a name="output_arn"></a> [arn](#output\_arn) | ECS cluster arn |
+| <a name="output_ec2_capacity_providers"></a> [ec2\_capacity\_providers](#output\_ec2\_capacity\_providers) | EC2 capacity provider and autoscale group names and ARNs, keyed by capacity provider |
 | <a name="output_id"></a> [id](#output\_id) | ECS cluster id |
 | <a name="output_name"></a> [name](#output\_name) | ECS cluster name |
 | <a name="output_role_name"></a> [role\_name](#output\_role\_name) | IAM role name |
